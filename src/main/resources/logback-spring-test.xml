@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+    <property name="log.path" value="C:/Users/prometheus/Desktop" />
+
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+             <level>ERROR</level>
+         </filter>-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger [%X{localIP}] [%X{requestId}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--输出到文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/logback.%d{yyyy-MM-dd}.log</fileNamePattern>
+<!--            30天-->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger [%X{localIP}] [%X{requestId}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+
+<!--    对于sql打印的debug，可以单独再配置一个级别-->
+    <!-- 该路径下级别为INFO，不设置级别则默认继承root级别 -->
+    <logger name="com.best.java" level="info" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </logger>
+
+    <!--logback.LogbackDemo：类的全路径 -->
+    <logger name="com.best.java.dao" level="debug" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </logger>
+    <logger name="org" level="error" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </logger>
+</configuration>
