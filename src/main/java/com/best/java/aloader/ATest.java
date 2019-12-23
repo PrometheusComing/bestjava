@@ -12,10 +12,14 @@ public class ATest {
 			Class c = classLoader.findClass("com.best.java.aloader.BEntity");
 			System.out.println(c.getClassLoader());
 			Object o = c.newInstance();
-			AEntity aEntity2 = new AEntity();
 			AEntity aEntity = (AEntity)o ;
-			aEntity.setAge(1);
-			System.out.println(aEntity.getAge());
+//			if (o instanceof AEntity) {
+//				System.out.println(111);
+//			} else if (o instanceof BEntity) {
+//				System.out.println(222);
+//			} else {
+//				System.out.println(333);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
