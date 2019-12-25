@@ -2,8 +2,6 @@ package com.best.java;
 
 import com.best.java.asm.AsmPersonService;
 import com.best.java.controller.TestController;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -14,7 +12,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 /**
  * @Author: xjxu3
@@ -24,27 +21,11 @@ import java.util.List;
 @Component
 public class BootRunner implements ApplicationRunner, ApplicationContextAware {
 
-	private static String agentPath = "C:\\Users\\prometheus\\Desktop\\work\\agentjava\\target\\agent-java-1.0-SNAPSHOT.jar";
-
 
 	private ApplicationContext app;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		List<VirtualMachineDescriptor> list = VirtualMachine.list();
-		list.forEach(t -> {
-			System.out.println(t.displayName());
-			if (t.displayName().endsWith("com.best.java.BootApplication")) {
-				VirtualMachine virtualMachine = null;
-				try {
-					virtualMachine = VirtualMachine.attach(t.id());
-					virtualMachine.loadAgent(agentPath);
-					virtualMachine.detach();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}});
-
 //		//将applicationContext转换为ConfigurableApplicationContext
 //		ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext)app;
 //

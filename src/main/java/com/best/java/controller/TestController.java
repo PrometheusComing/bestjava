@@ -1,5 +1,6 @@
 package com.best.java.controller;
 
+import com.best.java.PrintTime;
 import com.best.java.annotation.MyAnno;
 import com.best.java.asm.AsmPersonService;
 import com.best.java.father.Father;
@@ -25,8 +26,8 @@ public class TestController {
 	@Autowired
 	private RequestService requestService;
 
-	@Autowired
-	private AsmPersonService asmPersonService_Tmp;
+//	@Autowired
+//	private AsmPersonService asmPersonService_Tmp;
 
 
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -35,7 +36,11 @@ public class TestController {
 	@RequestMapping(value = "/hello",method = RequestMethod.GET)
 	@MyAnno(id="1")
 	public String hello() {
-		System.out.println("hello,this is best java");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return "hello";
 	}
 
@@ -48,9 +53,21 @@ public class TestController {
 		return "hello" + service;
 	}
 
-	@RequestMapping(value = "/helloAsm",method = RequestMethod.GET)
-	public String helloAsm() {
-		asmPersonService_Tmp.show("ll");
-		return "helloAsm";
+//	@RequestMapping(value = "/helloAsm",method = RequestMethod.GET)
+//	public String helloAsm() {
+//		asmPersonService_Tmp.show("ll");
+//		return "helloAsm";
+//	}
+
+	@RequestMapping(value = "/agent",method = RequestMethod.GET)
+	@PrintTime
+	public String agent() {
+		try {
+			System.out.println("agent processing");
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return "agent finish";
 	}
 }

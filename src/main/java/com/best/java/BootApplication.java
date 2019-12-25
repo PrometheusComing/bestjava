@@ -1,6 +1,8 @@
 package com.best.java;
 
 import com.best.java.aop.LogInterceptor;
+import com.sun.tools.attach.VirtualMachine;
+import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,9 +29,26 @@ import java.util.List;
 @SpringBootApplication
 public class BootApplication  implements WebMvcConfigurer, ApplicationContextAware {
 
+	private static String agentPath = "C:\\Users\\prometheus\\Desktop\\work\\agentjava\\target\\agent-java-1.0-SNAPSHOT.jar";
+
+
 	private ApplicationContext applicationContext;
 
 	public static void main(String[] args) {
+		List<VirtualMachineDescriptor> list = VirtualMachine.list();
+		list.forEach(t -> {
+			System.out.println("VirtualMachineDescriptor:" + t.displayName());
+			if (t.displayName().endsWith("com.best.java.BootApplication")) {
+				VirtualMachine virtualMachine = null;
+				try {
+					virtualMachine = VirtualMachine.attach(t.id());
+					virtualMachine.loadAgent(agentPath);
+					virtualMachine.detach();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		SpringApplication.run(BootApplication.class, args);
 	}
 
