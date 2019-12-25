@@ -23,6 +23,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
 	private final static String REQUEST_ID = "requestId";
 	private final static String LOCAL_IP = "localIP";
+	private final static String TRANCE_ID_HEADER = "trance-id";
 
 	private static String LOCALIP;
 
@@ -39,8 +40,15 @@ public class LogInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		String tranceId = request.getHeader(TRANCE_ID_HEADER);
+		String uuid;
+		if (tranceId != null) {
+			uuid = tranceId;
+		} else {
+			uuid = UUID.randomUUID().toString();
+		}
 		String ip = request.getRemoteAddr();
-		String uuid = UUID.randomUUID().toString();
+
 		MDC.put(REQUEST_ID,uuid);
 		MDC.put(LOCAL_IP,LOCALIP);
 		logger.info("requestId is {},ip is {}",uuid,ip);
@@ -51,7 +59,7 @@ public class LogInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		String uuid = MDC.get(REQUEST_ID);
 		String result = response.toString();
-		logger.info("requestId is {},result is {}",uuid,request);
+		logger.info("requestId is {},result is {}",uuid,result);
 		MDC.remove(REQUEST_ID);
         MDC.remove(LOCAL_IP);
 	}
