@@ -2,6 +2,7 @@ package com.best.java;
 
 import com.best.java.asm.AsmPersonService;
 import com.best.java.controller.TestController;
+import com.best.java.service.RequestService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -33,18 +34,18 @@ public class BootRunner implements ApplicationRunner, ApplicationContextAware {
 //		DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
 //
 //		// 通过BeanDefinitionBuilder创建bean定义
-//		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(AsmPersonService.class);
+//		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TestController.class);
 //
 //		// 设置属性userService,此属性引用已经定义的bean:userService,这里userService已经被spring容器管理了.
 ////        beanDefinitionBuilder.addPropertyReference("testService", "testService");
 //
 //		// 注册bean
-//		defaultListableBeanFactory.registerBeanDefinition("AsmPersonService_Tmp", beanDefinitionBuilder.getRawBeanDefinition());
+//		defaultListableBeanFactory.registerBeanDefinition("testController", beanDefinitionBuilder.getRawBeanDefinition());
 //
 //
 //		TestController userController = (TestController) app.getBean("testController");
 //
-//		System.out.println(userController);
+//		System.out.println("get you " + userController);
 
 	}
 
