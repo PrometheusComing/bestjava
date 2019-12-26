@@ -48,9 +48,7 @@ public class TestController {
 	public String helloUser(@RequestParam String userName, @RequestParam String UserId) {
 		String service = requestService.getHello();
 		logger.info("userId: {} ,userName: {} request helloUser",UserId,userName);
-		logger.debug("userId: {} ,userName: {} request helloUser",UserId,userName);
-		logger.error("userId: {} ,userName: {} request helloUser",UserId,userName);
-		return "hello" + service;
+		return service;
 	}
 
 //	@RequestMapping(value = "/helloAsm",method = RequestMethod.GET)
