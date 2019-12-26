@@ -28,7 +28,7 @@ public class RequestService {
 			Thread thread = new Thread(new MDCTaskRunnable(new Runnable() {
 				@Override
 				public void run() {
-					// jdk8里，看似finalI没有被final修饰，其实编译后会自动加上
+					// 这里的final其实是个语法糖，局部变量表里不会有final，只在检查时有用
 					logger.info(Thread.currentThread().getName() + finalI);
 				}
 			}));
