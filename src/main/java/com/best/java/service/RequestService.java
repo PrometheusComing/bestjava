@@ -32,7 +32,7 @@ public class RequestService {
 					logger.info(Thread.currentThread().getName() + finalI);
 				}
 			}));
-			// submit可以哦那个过Future的get()来catch运行异常，execute是个void
+			// submit可以通过Future的get()来catch运行异常，execute是个void
 			threadPoolExecutor.submit(thread);
 		}
 		return "hello";
