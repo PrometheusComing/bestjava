@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/best/java")
+@MyAnno(id="1")
 public class TestController {
 
 	@Autowired
@@ -34,7 +35,6 @@ public class TestController {
 
 
 	@RequestMapping(value = "/hello",method = RequestMethod.GET)
-	@MyAnno(id="1")
 	public String hello() {
 		try {
 			Thread.sleep(1000);
@@ -58,7 +58,7 @@ public class TestController {
 //	}
 
 	@RequestMapping(value = "/agent",method = RequestMethod.GET)
-	@PrintTime
+//	@PrintTime
 	public String agent() {
 		try {
 			System.out.println("agent processing");

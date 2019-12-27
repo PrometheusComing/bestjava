@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 // 配置在application.properties中，true则有效
-// @ConditionalOnProperty(value="method.interceptor")
+ @ConditionalOnProperty(value="method.interceptor")
 public class MyAspect {
 
 	/**
@@ -34,11 +34,12 @@ public class MyAspect {
 //	public void methodIntercept() {
 //	}
 
-	@Pointcut("@annotation(com.best.java.annotation.MyAnno)")
+//	@Pointcut("@annotation(com.best.java.annotation.MyAnno)")
+	@Pointcut("@within(com.best.java.annotation.MyAnno)")
 	public void methodIntercept() {
 	}
 
-	@Around(value = "methodIntercept() && @annotation(myAnnos)")
+	@Around(value = "methodIntercept() && @within(myAnnos)")
 	public Object doAround(ProceedingJoinPoint pjp, MyAnno myAnnos) throws Throwable {
 		System.out.println("it is Around before");
 		long begin = System.nanoTime();
