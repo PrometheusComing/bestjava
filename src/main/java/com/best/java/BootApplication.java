@@ -35,20 +35,20 @@ public class BootApplication  implements WebMvcConfigurer, ApplicationContextAwa
 	private ApplicationContext applicationContext;
 
 	public static void main(String[] args) {
-		List<VirtualMachineDescriptor> list = VirtualMachine.list();
-		list.forEach(t -> {
-			System.out.println("VirtualMachineDescriptor:" + t.displayName());
-			if (t.displayName().endsWith("com.best.java.BootApplication")) {
-				VirtualMachine virtualMachine = null;
-				try {
-					virtualMachine = VirtualMachine.attach(t.id());
-					virtualMachine.loadAgent(agentPath);
-					virtualMachine.detach();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		List<VirtualMachineDescriptor> list = VirtualMachine.list();
+//		list.forEach(t -> {
+//			System.out.println("VirtualMachineDescriptor:" + t.displayName());
+//			if (t.displayName().endsWith("com.best.java.BootApplication")) {
+//				VirtualMachine virtualMachine = null;
+//				try {
+//					virtualMachine = VirtualMachine.attach(t.id());
+//					virtualMachine.loadAgent(agentPath);
+//					virtualMachine.detach();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 		SpringApplication.run(BootApplication.class, args);
 	}
 

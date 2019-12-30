@@ -1,6 +1,7 @@
 package com.best.java.aop;
 
 import com.best.java.annotation.MyAnno;
+import com.best.java.domain.Animal;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -41,20 +42,34 @@ public class MyAspect {
 
 	@Around(value = "methodIntercept() && @within(myAnnos)")
 	public Object doAround(ProceedingJoinPoint pjp, MyAnno myAnnos) throws Throwable {
-		System.out.println("it is Around before");
-		long begin = System.nanoTime();
-		Object o = pjp.proceed();
-		long end = System.nanoTime();
-		System.out.println(pjp.toShortString() + "use" + (end - begin) / 1000000 + "ms");
-		System.out.println("it is Around after");
+		Object[] objects = pjp.getArgs();
+		for (Object o : objects) {
+			if (o instanceof Animal) {
+				Animal pageObj = (Animal) o;
+				pageObj.setName("intercept dog");
+			}
+		}
+		Object o = pjp.proceed(objects);
+//		System.out.println("it is Around before");
+//		long begin = System.nanoTime();
+//		Object o = pjp.proceed();
+//		long end = System.nanoTime();
+//		System.out.println(pjp.toShortString() + "use" + (end - begin) / 1000000 + "ms");
+//		System.out.println("it is Around after");
 		return o;
 	}
-//
-//	//在某连接点（JoinPoint）之前执行的通知，但这个通知不能阻止连接点前的执行
-//	@Before(value = "methodIntercept()&& @annotation(MyAnno)")
-//	public void beforeAction(JoinPoint joinPoint) {
-//		System.out.println("it is before");
-//	}
+
+	//在某连接点（JoinPoint）之前执行的通知，但这个通知不能阻止连接点前的执行
+	@Before(value = "methodIntercept()&& @annotation(myAnnos)")
+	public void beforeAction(JoinPoint joinPoint,MyAnno myAnnos) {
+		Object[] objects = joinPoint.getArgs();
+		for (Object o : objects) {
+			if (o instanceof Animal) {
+				Animal pageObj = (Animal) o;
+				pageObj.setName("intercept dog");
+			}
+		}
+	}
 //
 //	//当某连接点退出的时候执行的通知（不论是正常返回还是异常退出）
 //	@After(value = "methodIntercept()&& @annotation(MyAnno)")

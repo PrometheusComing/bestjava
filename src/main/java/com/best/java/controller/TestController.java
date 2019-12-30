@@ -3,6 +3,7 @@ package com.best.java.controller;
 import com.best.java.PrintTime;
 import com.best.java.annotation.MyAnno;
 import com.best.java.asm.AsmPersonService;
+import com.best.java.domain.Animal;
 import com.best.java.father.Father;
 import com.best.java.service.RequestService;
 import org.slf4j.Logger;
@@ -34,9 +35,10 @@ public class TestController {
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
 
 
-	@RequestMapping(value = "/hello",method = RequestMethod.GET)
-	public String hello() {
+	@RequestMapping(value = "/helloWithAnimal",method = RequestMethod.POST)
+	public String hello(Animal animal) {
 		try {
+			System.out.println(animal.getName());
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
