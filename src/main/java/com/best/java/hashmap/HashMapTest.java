@@ -41,19 +41,20 @@ public class HashMapTest {
 //			e.printStackTrace();
 //		}
 
-		HashMap<HashMapTest, String> map = new HashMap<>();
-		for (int i =0;i < 20;i ++ ) {
+		HashMap<HashMapTest, String> map = new HashMap<>(10);
+		for (int i =0;i < 1;i ++ ) {
 			map.put(new HashMapTest(),"123");
 		}
 
 
 		Class cls = map.getClass();
+
 		try {
-			Field field = cls.getDeclaredField("threshold");
+			Field field = cls.getDeclaredField("table");
 			field.setAccessible(true);
 			try {
-				System.out.println(field.get(map));
-				System.out.println(field.get(map));
+				Object[] objects = (Object[]) field.get(map);
+				System.out.println(objects.length);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			}
