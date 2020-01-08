@@ -28,8 +28,8 @@ public class TestController {
 	@Autowired
 	private RequestService requestService;
 
-//	@Autowired
-//	private AsmPersonService asmPersonService_Tmp;
+	@Autowired
+	private AsmPersonService asmPersonService_Tmp;
 
 
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -53,11 +53,11 @@ public class TestController {
 		return service;
 	}
 
-//	@RequestMapping(value = "/helloAsm",method = RequestMethod.GET)
-//	public String helloAsm() {
-//		asmPersonService_Tmp.show("ll");
-//		return "helloAsm";
-//	}
+	@RequestMapping(value = "/helloAsm",method = RequestMethod.GET)
+	public String helloAsm() {
+		asmPersonService_Tmp.show("ll");
+		return "helloAsm";
+	}
 
 	@RequestMapping(value = "/agent",method = RequestMethod.GET)
 //	@PrintTime
