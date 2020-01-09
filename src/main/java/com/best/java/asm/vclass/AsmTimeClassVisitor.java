@@ -40,7 +40,7 @@ public class AsmTimeClassVisitor extends ClassVisitor implements Opcodes {
 
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-		System.out.println("method name:" + name + " descriptor :" + descriptor);
+//		System.out.println("method name:" + name + " descriptor :" + descriptor);
 
 		// 对构造方法修改，使用原有类作为父类
 		if ("<init>".equals(name)) {

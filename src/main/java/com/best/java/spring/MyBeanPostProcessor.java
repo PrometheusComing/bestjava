@@ -53,7 +53,7 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		if (bean.getClass().getName().startsWith("com.best.java")) {
-			System.out.println(beanName);
+			System.out.println("beanName:" + beanName);
 		}
 		return bean;
 	}

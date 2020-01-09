@@ -20,8 +20,6 @@ public class AsmTimeMethodVisitor extends MethodVisitor implements Opcodes {
 
 	@Override
 	public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-		System.out.println("method descriptor is " + descriptor);
-		System.out.println("method visible is " + visible);
 		if ("Lcom/best/java/asm/anno/AsmTime;".equals(descriptor)) {
 			dealFlag = true;
 		}
@@ -31,7 +29,6 @@ public class AsmTimeMethodVisitor extends MethodVisitor implements Opcodes {
 	@Override
 	public void visitCode() {
 		//此方法在访问方法的头部时被访问到，仅被访问一次
-		System.out.println("dealFlag" + dealFlag);
 		if (dealFlag) {
 			mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
 			mv.visitVarInsn(LSTORE, 1);
