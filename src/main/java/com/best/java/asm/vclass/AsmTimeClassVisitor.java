@@ -23,13 +23,13 @@ public class AsmTimeClassVisitor extends ClassVisitor implements Opcodes {
 		//将自己构造成子类，继承原有的类
 		this.myClassName = name;
 		// 新增一个方法
-		MethodVisitor mw = cv.visitMethod(ACC_PUBLIC + ACC_STATIC, "add", "([Ljava/lang/String;)V", null, null);
-		mw.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-		mw.visitLdcInsn("this is add method print!");
-		mw.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V",false);
-		mw.visitInsn(RETURN);
-		mw.visitMaxs(0, 0);
-		mw.visitEnd();
+//		MethodVisitor mw = cv.visitMethod(ACC_PUBLIC + ACC_STATIC, "add", "([Ljava/lang/String;)V", null, null);
+//		mw.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+//		mw.visitLdcInsn("this is add method print!");
+//		mw.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V",false);
+//		mw.visitInsn(RETURN);
+//		mw.visitMaxs(0, 0);
+//		mw.visitEnd();
 		super.visit(version, access, name + "_Tmp", signature, name, interfaces);
 	}
 

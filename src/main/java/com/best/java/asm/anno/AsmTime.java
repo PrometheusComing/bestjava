@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @Date: 2019/12/12 9:55
  * @Description:
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface AsmTime {
 }

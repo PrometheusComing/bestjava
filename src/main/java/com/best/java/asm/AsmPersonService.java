@@ -4,12 +4,14 @@ import com.best.java.asm.anno.AsmChangeFiled;
 import com.best.java.asm.anno.AsmTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: xjxu3
  * @Date: 2019/12/12 9:43
  * @Description:
  */
+@Component
 public class AsmPersonService {
 
 //	private static final Logger LOGGER = LoggerFactory.getLogger(AsmPersonService.class);
