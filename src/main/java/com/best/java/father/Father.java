@@ -9,6 +9,10 @@ import com.best.java.fanshe.FansheTest;
  */
 public class Father {
 
+	public static void print() {
+		System.out.println("it is father static");
+	}
+
 	public Father(int i) {
 		System.out.println(222);
 	}

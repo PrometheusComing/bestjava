@@ -7,12 +7,13 @@ package com.best.java.father;
  */
 public class CastTest {
 
+	// 加载 链接（验证，准备，解析）初始化,准备阶段的初始化，name是null
 	//clinit里是类变量赋值动作和static代码块的集合，按序执行，new执行完成后，name还没初始化，是null
 	//这里可以看成在初始化阶段调用clinit，而clinit是由static的代码按顺序执行的
 	private static CastTest test = new CastTest() ;
 
-//	private static final String name = new String("string_name");
-	private static final String name = "string_name";
+	private static final String name = new String("string_name");
+//	private static final String name = "string_name";
 
 	static {
 		System.out.println(888);
@@ -33,7 +34,7 @@ public class CastTest {
 		System.out.println(test.testName); // 输出结果为: null
 	}
 
-	//	public static void main(String[] args) {
+//		public static void main(String[] args) {
 //		Father father = new Child();
 //		father.setName("baba");
 //		father.setRela("father");

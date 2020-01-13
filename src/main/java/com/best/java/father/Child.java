@@ -19,6 +19,7 @@ public class Child extends Father {
 	private int age;
 
 	public int getAge() {
+		print();
 		return age;
 	}
 
