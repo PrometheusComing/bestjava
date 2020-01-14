@@ -16,10 +16,14 @@ public class Child extends Father {
 		System.out.println(111);
 	}
 
+	public void printmy() {
+		System.out.println("it is my");
+	}
+
 	private int age;
 
 	public int getAge() {
-		print();
+		printmy();
 		return age;
 	}
 
