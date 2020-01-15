@@ -33,16 +33,16 @@ public class OrderClass {
 //	flags: ACC_PUBLIC
 //	Code:
 //	stack=2, locals=6（总共用到6个slot，0~5）, args_size=1
-//		   0: iconst_1 //将1压入操作数栈栈顶
-//         1: istore_1 //将栈顶出栈并存入slot为1的变量x中，即x等于1
-//         2: iconst_2 //将2压入栈顶
-//         3: istore_2 //将栈顶出栈并存入slot为2的变量y中，即y等于2
-//         4: iload_1  //将slot 1里面的值1，压入栈顶
-//         5: iload_2  //将slot 2里面的值2，压入栈顶
-//         6: iadd     //将操作数栈中的两个数出栈并执行加法后，结果压入栈顶，此时操作数栈只有一个值，即x+y等于3
-//         7: istore_3 //将栈顶出栈并保存到slot 3中，其实这里的slot 3被重用了，用于存放returnValue
-//         8: iconst_3 //将3压入栈顶
-//         9: istore_1 //将3出栈并存入slot 1的变量x中，此时x等于3（此处就是finall代码）
+//		   0: iconst_1 // 将1压入操作数栈栈顶
+//         1: istore_1 // 将栈顶出栈并存入slot为1的变量x中，即x等于1
+//         2: iconst_2 // 将2压入栈顶
+//         3: istore_2 // 将栈顶出栈并存入slot为2的变量y中，即y等于2
+//         4: iload_1  // 将slot 1里面的值1，压入栈顶
+//         5: iload_2  // 将slot 2里面的值2，压入栈顶
+//         6: iadd     // 将操作数栈中的两个数出栈并执行加法后，结果压入栈顶，此时操作数栈只有一个值，即x+y等于3
+//         7: istore_3 // 将栈顶出栈并保存到slot 3中，其实这里的slot 3被重用了，用于存放returnValue
+//         8: iconst_3 // 将3压入栈顶
+//         9: istore_1 // 将3出栈并存入slot 1的变量x中，此时x等于3（此处就是finall代码）
 //        10: iload_3  // 将slot 3里面的值3（就是returnValue）压入栈顶
 //        11: ireturn  // 将栈顶的值3，进行返回整型操作
 //        12: astore_3         // catch语句，将栈顶的值出栈，并存入slot为3的异常引用中，就是给exception的e赋值
