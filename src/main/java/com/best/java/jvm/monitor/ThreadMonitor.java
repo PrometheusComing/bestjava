@@ -22,16 +22,17 @@ public class ThreadMonitor {
 
 	}
 
-	public static void createLockThread(final Object lock) {
+	public static void createLockThread(final Object lock,final String name) {
 		new Thread(() -> {
 			synchronized (lock) {
 				try {
+					Thread.sleep(10000);
 					lock.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-		},"lockThread").start();
+		},name).start();
 	}
 
 	public static void main(String[] args) {
@@ -41,8 +42,11 @@ public class ThreadMonitor {
 			createBusyThread();
 			bufferedReader.readLine();
 			byte[] bytes = new byte[] {};
-			createLockThread(bytes);
-		} catch (IOException e) {
+			createLockThread(bytes,"waitThread");
+			Thread.sleep(1000);
+			createLockThread(bytes,"blockThread");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

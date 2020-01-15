@@ -12,9 +12,9 @@ public class DeadThread implements Runnable {
 
 	private int b;
 
-	public DeadThread(int a, int b) {
-		this.a = a;
-		this.b = b;
+	public DeadThread(int first, int second) {
+		this.a = first;
+		this.b = second;
 	}
 
 	@Override
