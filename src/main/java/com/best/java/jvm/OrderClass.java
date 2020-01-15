@@ -3,7 +3,10 @@ package com.best.java.jvm;
 /**
  * @Author: xjxu3
  * @Date: 2020/1/15 10:58
- * @Description: 观察字节码指令
+ * @Description: 观察字节码指令，TestTryCatch里也有指令
+ * 1.invokespecial只能调用三类方法：<init>方法；私有方法；super.method()。因为这三类方法的调用对象在编译时就可以确定。
+ *
+ * 2.invokevirtual是一种动态分派的调用指令：也就是引用的类型并不能决定方法属于哪个类型。
  */
 public class OrderClass {
 
@@ -45,7 +48,7 @@ public class OrderClass {
 //         9: istore_1 // 将3出栈并存入slot 1的变量x中，此时x等于3（此处就是finall代码）
 //        10: iload_3  // 将slot 3里面的值3（就是returnValue）压入栈顶
 //        11: ireturn  // 将栈顶的值3，进行返回整型操作
-//        12: astore_3         // catch语句，将栈顶的值出栈，并存入slot为3的异常引用中，就是给exception的e赋值
+//        12: astore_3         // catch语句，将栈顶的值出栈，并存入slot为3的异常引用中，就是给exception的e赋值（JVM会将Exception异常对象的引用入栈）
 //        13: iconst_2         // 将2压入栈顶
 //        14: istore_1         // 将栈顶的值2出栈并存入slot 1中，即x等于2
 //        15: iload_1          // 将slot 1的值2入栈
