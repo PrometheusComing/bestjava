@@ -13,16 +13,24 @@ public class StringTest {
 		this.value = value;
 	}
 
+	public static void change(String str,char[] ch) {
+		str = "test ok";
+		ch[0] = 'g';
+	}
+
 	public  static void change(String s,StringTest stringTest) {
 		s = "11";
 		stringTest = new StringTest("22");
 	}
 	public static void main(String[] args) {
+		char[] ch = {'a','b','c'};
 		String string = new String("1");
 		StringTest stringTest = new StringTest("2");
-		change(string,stringTest);
+//		change(string,stringTest);
+		change(string,ch);
 		System.out.println(string);
 		System.out.println(stringTest.value);
+		System.out.println(ch);
 //		String s = "AB";
 //		String s5 = s + "CD";
 //		String s6 = getSt() + "CD";

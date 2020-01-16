@@ -3,7 +3,7 @@ package com.best.java;
 /**
  * @Author: xjxu3
  * @Date: 2019/4/28 9:40
- * @Description:
+ * @Description: 算法
  */
 public class Programma4 {
 	public static void main(String[] args) {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * @Author: xjxu3
  * @Date: 2019/4/26 11:54
- * @Description:
+ * @Description: 回文字符串
  */
 public class Programma {
 	public static void main(String[] args) {

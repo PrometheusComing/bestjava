@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class App {
+public class ReadWriteLockTest {
 	private static Lock lock = new ReentrantLock();
 	private static ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 	private static Lock readLock = readWriteLock.readLock();
@@ -40,10 +40,10 @@ public class App {
 
 	}
     public static void main (String...args)  {
-		App app = new App();
+		ReadWriteLockTest readWriteLockTest = new ReadWriteLockTest();
 		Runnable readable = () -> {
 			try {
-				app.handleRead(readLock);
+				readWriteLockTest.handleRead(readLock);
 //				app.handleRead(lock);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -52,7 +52,7 @@ public class App {
 
 		Runnable writeable = () -> {
 			try {
-				app.handleWrite(writeLock,new Random().nextInt(100));
+				readWriteLockTest.handleWrite(writeLock,new Random().nextInt(100));
 //				app.handleWrite(lock,new Random().nextInt(100));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
