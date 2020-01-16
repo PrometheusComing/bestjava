@@ -1,4 +1,4 @@
-package com.best.java.jvm;
+package com.best.java.jvm.dispatch;
 
 /**
  * @Author: xjxu3

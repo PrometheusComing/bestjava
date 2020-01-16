@@ -19,6 +19,7 @@ public class ThreadMonitor {
 
 	}
 
+	// 线程等待
 	public static void createLockThread(final Object lock,final String name) {
 		new Thread(() -> {
 			synchronized (lock) {

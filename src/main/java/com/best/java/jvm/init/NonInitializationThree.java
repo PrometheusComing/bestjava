@@ -1,4 +1,4 @@
-package com.best.java.test;
+package com.best.java.jvm.init;
 
 /**
  * @Author: xjxu3

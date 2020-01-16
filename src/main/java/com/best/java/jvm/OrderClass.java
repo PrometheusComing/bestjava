@@ -3,7 +3,7 @@ package com.best.java.jvm;
 /**
  * @Author: xjxu3
  * @Date: 2020/1/15 10:58
- * @Description: 观察字节码指令，TestTryCatch里也有指令
+ * @Description: 观察字节码指令，com.best.java.finall.TestTryCatch里也有指令
  * 1.invokespecial只能调用三类方法：<init>方法；私有方法；super.method()。因为这三类方法的调用对象在编译时就可以确定。
  *
  * 2.invokevirtual是一种动态分派的调用指令：也就是引用的类型并不能决定方法属于哪个类型。

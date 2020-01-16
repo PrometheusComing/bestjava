@@ -1,4 +1,4 @@
-package com.best.java.test;
+package com.best.java.jvm.init;
 
 /**
  * @Author: xjxu3
@@ -11,4 +11,5 @@ public class ConstClass {
 	}
 
 	public static final String HELLO_WORLD = new String("hello world");
+//	public static final String HELLO_WORLD = "hello world";
 }
