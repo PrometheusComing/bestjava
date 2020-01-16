@@ -18,7 +18,8 @@ package com.best.java.jvm.init;
  * 1.通过子类引用父类的静态字段，不会引发子类的初始化（见PassiveReference）
  * 2.通过数组的定义引用类，不会触发初始化（见PassiveReference）
  * 3.常量在编译期间会存入调用类的常量池中，本质上并没用直接引用到定义常量的类，因此不会触发定义常量的
- * 类的初始化（就是本例）
+ * 类的初始化。其实编译后的字节码，NonInitializationThree都不持有Fieldref  // com/best/java/jvm/init/
+ * ConstClass.HELLO_WORLD:Ljava/lang/String;（就是本例）
  */
 public class NonInitializationThree {
 	public static void main(String[] args) {
