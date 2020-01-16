@@ -11,6 +11,7 @@ package com.best.java.jvm.dispatch;
  * 然后是运行期间，动态分派的过程，在执行invokevirtual指令时（比如是son.hardChoice(new QQ());）,编译期间已经确定
  * 目标方法签名必须是hardChoice(QQ),在当前实际类型Son中，找到hardChoice(QQ arg) ,直接调用后结束。只有方法调用者有影响，所以
  * 属于动态单分派
+ * p.s. 动态类型语言：类型检查过程主要在运行期而非编译器。java,c++都是静态类型语言
  */
 
 public class Dispatch {
