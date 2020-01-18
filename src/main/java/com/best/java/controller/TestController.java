@@ -35,12 +35,6 @@ public class TestController {
 
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
 
-
-	@RequestMapping(value = "/getDate",method = RequestMethod.POST)
-	public String getDate() {
-		return requestService.getDate();
-	}
-
 	@RequestMapping(value = "/helloWithAnimal",method = RequestMethod.POST)
 	public String hello(Animal animal) {
 		try {

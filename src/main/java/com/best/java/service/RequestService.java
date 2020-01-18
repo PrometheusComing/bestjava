@@ -2,14 +2,8 @@ package com.best.java.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 
-import javax.sound.sampled.Line;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -23,9 +17,6 @@ public class RequestService {
 	private final static Logger logger = LoggerFactory.getLogger(RequestService.class);
 
 	static ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor)Executors.newCachedThreadPool();
-
-	private static ThreadLocal<SimpleDateFormat> FOR_MAT = ThreadLocal
-			.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
 	public String getHello() {
 		logger.info("it is hello");
@@ -42,18 +33,5 @@ public class RequestService {
 			threadPoolExecutor.submit(thread);
 		}
 		return "hello";
-	}
-
-	public String getDate() {
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		Thread t = Thread.currentThread();
-		String result  = FOR_MAT.get().format(new Date());
-		System.out.println(t.getName() + FOR_MAT.get().hashCode()
-		);
-		return result;
 	}
 }
