@@ -24,7 +24,7 @@ public class LambdaTest {
 		this.modifyTime = modifyTime;
 	}
 
-	public void print(int value, LambdaInterface lambdaInterface) {
+	public void print(int value, LambdaInterface<LambdaTest> lambdaInterface) {
 		for (int i = 0; i < value; i++) {
 			System.out.println("改变值是：" + lambdaInterface.action(this));
 			lambdaInterface.act();
@@ -33,14 +33,6 @@ public class LambdaTest {
 
 	public static void printNum(int value) {
 		System.out.println(String.valueOf(19 - value));
-	}
-
-	LambdaTest(int p) {
-		System.out.println(111);
-	}
-
-	LambdaTest(String p) {
-		System.out.println(121);
 	}
 
 	LambdaTest() {
