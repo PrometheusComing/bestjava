@@ -18,10 +18,10 @@ public class UserService2 {
 	@Autowired
 	private UserMapper userMapper;
 
-	@Transactional(propagation = Propagation.NESTED)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public int addUserTest2(User user) {
 		userMapper.addUser(user);
-//		throw new RuntimeException();
-		return 1;
+		throw new RuntimeException();
+//		return 1;
 	}
 }

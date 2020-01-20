@@ -29,29 +29,19 @@ public class UserService {
 		return userMapper.addUser(user);
 	}
 
-//	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public int addUserTest(User user){
 		int result = userMapper.addUser(user);
 		user.setId(user.getId() + 1000);
 		user.setName(user.getName() + "test2");
 
-//		try {
-//			userService2.addUserTest2(user);
-		    addUserTest3(user);
-//		} catch (RuntimeException e) {
-//			System.out.println("嵌套事务失败回滚");
-//			System.out.println("执行其他操作，不影响当前事务");
-//		}
+		try {
+			userService2.addUserTest2(user);
+		} catch (RuntimeException e) {
+			System.out.println("嵌套事务失败回滚");
+			System.out.println("执行其他操作，不影响当前事务");
+		}
 //		throw new RuntimeException();
 		return 1;
 	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public int addUserTest3(User user) {
-		userMapper.addUser(user);
-		throw new RuntimeException();
-//		return 1;
-	}
-
-
 }
