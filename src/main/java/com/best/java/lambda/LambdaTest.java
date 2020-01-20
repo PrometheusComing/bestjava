@@ -1,9 +1,5 @@
-package com.best.java.domain;
+package com.best.java.lambda;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 public class LambdaTest {
@@ -64,12 +60,5 @@ public class LambdaTest {
 		});
 		System.out.println(lambdaTest.value);
 		System.out.println(lambdaTest.modifyTime);
-		List<String> list = new ArrayList<String>() {{
-			add("11111");
-			add("123");
-		}};
-		list.sort(Comparator.comparingInt(String::length));
-		list.forEach(System.out::println);
-
 	}
 }

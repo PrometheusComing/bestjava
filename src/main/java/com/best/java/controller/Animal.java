@@ -1,4 +1,4 @@
-package com.best.java.domain;
+package com.best.java.controller;
 
 public class Animal {
     private String name;

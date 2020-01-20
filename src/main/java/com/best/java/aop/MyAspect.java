@@ -1,7 +1,7 @@
 package com.best.java.aop;
 
 import com.best.java.annotation.MyAnno;
-import com.best.java.domain.Animal;
+import com.best.java.controller.Animal;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;

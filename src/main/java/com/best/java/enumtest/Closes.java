@@ -1,4 +1,4 @@
-package com.best.java.domain;
+package com.best.java.enumtest;
 
 public enum  Closes {
     SMALL(0),

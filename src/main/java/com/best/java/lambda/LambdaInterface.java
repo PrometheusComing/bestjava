@@ -1,4 +1,4 @@
-package com.best.java.domain;
+package com.best.java.lambda;
 
 @FunctionalInterface
 public interface LambdaInterface {

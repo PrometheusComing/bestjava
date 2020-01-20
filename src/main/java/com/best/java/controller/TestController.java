@@ -1,9 +1,7 @@
 package com.best.java.controller;
 
-import com.best.java.annotation.MyAnno;
 import com.best.java.asm.AsmPersonService;
 import com.best.java.asm.vmethod.BeanWithAsmTime;
-import com.best.java.domain.Animal;
 import com.best.java.service.RequestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
