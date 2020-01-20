@@ -3,6 +3,7 @@ package com.best.java;
 import com.best.java.aop.LogInterceptor;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 //@EnableAspectJAutoProxy
 @SpringBootApplication
+@MapperScan("com.best.java.mybatis.mappers")
 public class BootApplication  implements WebMvcConfigurer, ApplicationContextAware {
 
 	private static String agentPath = "C:\\Users\\prometheus\\Desktop\\work\\agentjava\\target\\agent-java-1.0-SNAPSHOT.jar";
