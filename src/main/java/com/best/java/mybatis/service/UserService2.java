@@ -18,7 +18,7 @@ public class UserService2 {
 	@Autowired
 	private UserMapper userMapper;
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.NESTED)
 	public int addUserTest2(User user) {
 		userMapper.addUser(user);
 		throw new RuntimeException();

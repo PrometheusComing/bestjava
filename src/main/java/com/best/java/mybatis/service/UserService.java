@@ -38,7 +38,7 @@ public class UserService {
 		try {
 			userService2.addUserTest2(user);
 		} catch (RuntimeException e) {
-			System.out.println("嵌套事务失败回滚");
+			System.out.println("嵌套事务或新事务失败回滚");
 			System.out.println("执行其他操作，不影响当前事务");
 		}
 //		throw new RuntimeException();
