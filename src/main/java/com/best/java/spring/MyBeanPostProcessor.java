@@ -15,6 +15,13 @@ import java.lang.reflect.Method;
  * @Author: xjxu3
  * @Date: 2020/1/9 16:17
  * @Description: 后置处理器，处理方法带有注解的bean，并且使用asm重新处理
+ *
+ * p.s. bean的生命周期
+ * Bean的建立（容器寻找Bean的定义信息并将其实例化） --> 属性注入(使用依赖注入，Spring按照Bean定义信息配置Bean所有属性)
+ * --> 实现BeanNameAware --> BeanFactoryAware --> ApplicationContextAware -->BeanPostProcessors的ProcessBeforeInitialization()
+ * --> initializingBean接口的afterPropertiesSet() --> Bean定义文件中定义init-method
+ * --> BeanPostProcessors的ProcessaAfterInitialization() --> DisposableBean的destroy()
+ * --> Bean定义文件中定义destroy-method
  */
 public class MyBeanPostProcessor implements BeanPostProcessor {
 
