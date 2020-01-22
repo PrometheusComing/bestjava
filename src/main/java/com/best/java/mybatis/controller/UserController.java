@@ -1,9 +1,19 @@
 package com.best.java.mybatis.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.best.java.mybatis.entity.User;
 import com.best.java.mybatis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.websocket.server.PathParam;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 /**
  * @Author: xjxu3
@@ -41,6 +51,19 @@ public class UserController {
 	@RequestMapping(value = "/getUserById",method = RequestMethod.POST)
 	public User getUser(@RequestParam(value = "id",required = true) int id) {
 		return userService.getUserById(id);
+	}
+
+	// @PathVariable 和@RequestParam都是获取参数，前者是占位符的方式，后者是key value的方式
+	@RequestMapping(value = "/{userId}",method = RequestMethod.GET)
+	public User getUserByPathValue(@PathVariable(value = "userId") int id) {
+		return userService.getUserById(id);
+	}
+
+	// 上传文件
+	@PostMapping("/uploadPhoto")
+	public String returnPhoto(MultipartHttpServletRequest mhs) throws IOException{
+		MultipartFile multipartFile = mhs.getFile("file");
+		return userService.uploadFile(multipartFile);
 	}
 
 	@RequestMapping(value = "/addUser",method = RequestMethod.POST)

@@ -61,20 +61,35 @@ public class BootApplication  implements WebMvcConfigurer, ApplicationContextAwa
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**");
+		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**")
+				.excludePathPatterns("/toIndex","/index");;
 	}
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-
+		//访问http://localhost:18081/toIndex就跳转到index页面了
+		registry.addViewController("/toIndex").setViewName("index");
 	}
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/my/**").addResourceLocations("classpath:/my/");
+		String os = System.getProperty("os.name");
+
+		//如果是Windows系统
+		if (os.toLowerCase().startsWith("win")) {
+			registry.addResourceHandler("/app_file/**")
+					.addResourceLocations("file:" + "C:/user");
+		} else {  //linux 和mac
+			registry.addResourceHandler("/app_file/**")
+					.addResourceLocations("file:" + "/user/app/") ;
+		}
+		//将请求中的/my换成classpath下的/my/去获取资源.其实就是映射资源的真正路径来获取资源
+//		registry.addResourceHandler("/my/**").addResourceLocations("classpath:/my/");
+//		registry.addResourceHandler("/photo/**").addResourceLocations("file:C:\\Users\\prometheus\\Desktop\\");
 	}
 
 	@Override
 	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> handlers) {
-
+     //可以对返回数据进行封装规整，ResponseBodyWrapHandler自己实现
+//		handlers.add(new ResponseBodyWrapHandler());
 	}
 }
