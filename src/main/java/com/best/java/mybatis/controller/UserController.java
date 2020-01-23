@@ -40,6 +40,14 @@ import java.util.UUID;
  *  3.methodA是REQUIRED级别，methodB是NESTED级别
  *    methodB的异常自己不捕获，B将进行回滚，methodB的异常methodA不捕获，A也回滚，如果捕获了，A不回滚（和上面一样）
  *    methodA的异常，将造成A回滚，并且B也要回滚
+ *
+ *    p.s.关于乱码
+ *    1、如果提交方式为post，想不乱码，只需要在服务器端设置request对象的编码即可，客户端以哪种编码提交的，服务器端的request
+ *    对象就以对应的编码接收，比如客户端是以UTF-8编码提交的，那么服务器端request对象就以UTF-8编码接收
+ *    (request.setCharacterEncoding("UTF-8"))，springmvc里的CharacterEncodingFilter可以做到
+ *
+ *    2、如果提交方式为get，设置request对象的编码是无效的，request对象还是以默认的ISO8859-1编码接收数据，因此要想不乱码，
+ *    只能在接收到数据后再手工转换或者修改tomcat的server.xml(当然tomcat8以后，默认编码就是utf-8了)
  */
 @RestController
 @RequestMapping("/best/java")
@@ -49,6 +57,8 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/getUserById",method = RequestMethod.POST)
+	// id放在url后面key value形式或者直接放在body里都行,但是只能获取Content-Type: application/x-www-form-urlencoded
+	// 如果使用postman里的raw，且Content-Type为application/json请求,放在body里是无法取出的
 	public User getUser(@RequestParam(value = "id",required = true) int id) {
 		return userService.getUserById(id);
 	}
@@ -67,9 +77,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/addUser",method = RequestMethod.POST)
-	public int addUser(@RequestBody User user) {
+	// 测试参数转化，这种情况id只能放在url后面，body里是user的json
+	// 使用@RequestBody,请求中需要设置Content-Type为application/json
+	public int addUser(@RequestParam(value = "id",required = true) int id,@RequestBody User user) {
+		System.out.println(id);
 		return userService.addUser(user);
 	}
+
 
 	@RequestMapping(value = "/addUserTest",method = RequestMethod.POST)
 	public int testTransactional(@RequestBody User user){
