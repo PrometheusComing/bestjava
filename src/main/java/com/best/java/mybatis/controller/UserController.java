@@ -58,6 +58,7 @@ public class UserController {
 
 	@RequestMapping(value = "/getUserById",method = RequestMethod.POST)
 	// id放在url后面key value形式或者直接放在body里都行,但是只能获取Content-Type: application/x-www-form-urlencoded
+	// html form 表单的默认 enctype方式就是Content-Type: application/x-www-form-urlencoded
 	// 如果使用postman里的raw，且Content-Type为application/json请求,放在body里是无法取出的
 	public User getUser(@RequestParam(value = "id",required = true) int id) {
 		return userService.getUserById(id);
