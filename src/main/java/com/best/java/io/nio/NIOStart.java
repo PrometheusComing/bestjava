@@ -1,4 +1,4 @@
-package com.best.java.nioSocketTest;
+package com.best.java.io.nio;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,6 +14,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *
+ */
 public class NIOStart {
 
 	private Selector selector;
