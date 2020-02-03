@@ -1,6 +1,5 @@
 package com.best.java.programma;
 
-import javax.validation.constraints.Max;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
