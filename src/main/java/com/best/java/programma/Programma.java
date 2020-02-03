@@ -1,4 +1,4 @@
-package com.best.java;
+package com.best.java.programma;
 
 import java.util.Scanner;
 

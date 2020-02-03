@@ -1,4 +1,4 @@
-package com.best.java;
+package com.best.java.concurrent;
 
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
