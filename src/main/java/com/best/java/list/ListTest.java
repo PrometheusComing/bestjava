@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Author: xjxu3
@@ -26,6 +27,7 @@ public class ListTest {
 //		lists.forEach(System.out::println);
 //	}
 	public static void main(String[] args) {
+//		CopyOnWriteArrayList
 		Set<Short> s = new HashSet<Short>();
 		for (Short i = 0; i < 100; i++) {
 			s.add(i);
