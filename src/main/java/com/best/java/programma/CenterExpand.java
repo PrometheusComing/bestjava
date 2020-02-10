@@ -43,7 +43,7 @@ public class CenterExpand {
 			left--;
 			right++;
 		}
-		// 返回以begin,end为基准，同时向左向右扩展后能够得到的最长回文串长度
+		// 得到当前的最长回文串长度
 		return right - left - 1;
 	}
 
