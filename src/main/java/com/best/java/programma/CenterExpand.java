@@ -34,7 +34,11 @@ public class CenterExpand {
 	}
 
 	static int centerExpand(String s, int begin, int end) {
-		int left = begin, right = end;
+		// 记下左边
+		int left = begin;
+		// 记下右边
+		int right = end;
+		// 向左右两边拓展开，直到不相等
 		while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
 			left--;
 			right++;
