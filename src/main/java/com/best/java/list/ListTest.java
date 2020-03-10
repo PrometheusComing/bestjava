@@ -27,15 +27,18 @@ public class ListTest {
 //		lists.forEach(System.out::println);
 //	}
 	public static void main(String[] args) {
+		Set<String> set = new HashSet<>();
+		System.out.println(set.add("123"));
+		System.out.println(set.add("123"));
 //		CopyOnWriteArrayList
-		Set<Short> s = new HashSet<Short>();
-		for (Short i = 0; i < 100; i++) {
-			// 存的是short
-			s.add(i);
-			// 移除的是int
-			s.remove( i - 1);
-		}
-		System.out.println(s.size());
+//		Set<Short> s = new HashSet<Short>();
+//		for (Short i = 0; i < 100; i++) {
+//			// 存的是short
+//			s.add(i);
+//			// 移除的是int
+//			s.remove( i - 1);
+//		}
+//		System.out.println(s.size());
 	}
 
 }
