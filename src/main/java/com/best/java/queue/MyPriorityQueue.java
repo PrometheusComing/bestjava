@@ -9,7 +9,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 /**
  * @Author: xjxu3
  * @Date: 2020/3/12 12:37
- * @Description: 优先队列
+ * @Description: 优先队列 （小根堆）
  */
 public class MyPriorityQueue {
 	private int[] array;
@@ -22,7 +22,7 @@ public class MyPriorityQueue {
 	/**
 	 * 出入数据
 	 *
-	 * @param value 要插入的数据
+	 * @param value 要插入的数据,先插入到最后，然后慢慢上浮找位置
 	 */
 	public void enQueue(int value) {
 		// 先判断队列长度是否超出范围，是则扩容
@@ -34,7 +34,7 @@ public class MyPriorityQueue {
 	}
 
 	/**
-	 * 取出堆顶数据，并删除（置零）数组最后一个数据
+	 * 取出堆顶数据，将数组最后一个元素放到堆顶，本身置0后，下沉找位置。对于左右孩子都比自己小，则选择最小的替换。
 	 *
 	 * @return 堆顶数据
 	 */
