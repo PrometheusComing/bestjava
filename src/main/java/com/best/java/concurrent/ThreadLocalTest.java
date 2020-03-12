@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
  * @Date: 2020/1/17 14:30
  * @Description: ThreadLocal测试类
  *原理：
- * Thread里有个ThreadLocalMap类型的成员变量threadLocals,里面有个Entry[]，entry的key就是ThreadLocal的hash，value就是存的类型
- * （本例就是SimpleDateFormat）。所以其实副本是存在当前线程自己的ThreadLocalMap里的，要用ThreadLocal的hash去取，拿不到就调用
+ * Thread里有个ThreadLocalMap类型的成员变量threadLocals,里面有个Entry[]，entry的key就是ThreadLocal的实例FORMAT_LOCAL，value就是存的类型
+ * （本例就是SimpleDateFormat）。所以其实副本是存在当前线程自己的ThreadLocalMap里的，要用ThreadLocal实例的hash去取在Entry[]中的位置，拿不到就调用
  * 初始化方法initialValue(),然后再set进去
- * 取到就直接使用
+ * 取到就拿出对应的value实例SimpleDateFormat进行使用
  *
  * ThreadLocalMap是ThreadLocal的静态内部类
  * Entry是ThreadLocalMap的静态内部类
@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
  * 虚引用：也称为幻影引用，一个对象是都有虚引用的存在都不会对生存时间都构成影响，也无法通过虚引用来获取对一个对象的真实引用。唯一的用处：能在对象被GC时收到系统通知，JAVA中用PhantomReference来实现虚引用
  *
  * 造成内存泄漏，最后出现内存溢出的原因（根据本例）：
- * 当把FORMAT_LOCAL变量置为null以后，没有任何强引用指向FORMAT_LOCAL实例，所以FORMAT_LOCAL将会被gc回收。
+ * 当把FORMAT_LOCAL变量置为null以后，就没有任何强引用指向FORMAT_LOCAL实例，所以FORMAT_LOCAL实例将会被gc回收。
  * 这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，
  * 如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：
  * Thread Ref -> Thread -> ThreaLocalMap -> Entry -> value，而这块value永远不会被访问到了，所以存在着内存泄露。
