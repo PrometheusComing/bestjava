@@ -4,6 +4,9 @@ package com.best.java.father;
  * @Author: xjxu3
  * @Date: 2019/12/4 11:49
  * @Description:
+ *
+ * 子类本身就可以强转成父类,被父类引用.比如转成Object
+ * 父类的实例肯定不能转成子类,除非是父类引用子类的实例
  */
 public class CastTest {
 
