@@ -35,14 +35,15 @@ public class CastTest {
 	}
 
 //		public static void main(String[] args) {
-//		Father father = new Child();
+////		Father father = new Child();
+//		Father father = new Father(1);
 //		father.setName("baba");
 //		father.setRela("father");
 //		Child child = new Child();
 //		child.setAge(12);
 //		child.setName("erzi");
 //		child.setRela("son");
-//		Father father1 = child;
+//		Father father1 = (Father) child;
 //		Child child1 = (Child) father;
 //		System.out.println(father1.getName());
 //		System.out.println(child1.getName());
