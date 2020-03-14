@@ -23,4 +23,6 @@ public class ByteClassLoader extends ClassLoader {
 		}
 		return defineClass(name, bytes,0,bytes.length);
 	}
+	// 没有破坏双亲委派,子类的父类依旧会委派到app加载
+
 }

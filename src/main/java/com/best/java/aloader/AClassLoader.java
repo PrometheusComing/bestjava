@@ -28,6 +28,7 @@ public class AClassLoader extends ClassLoader {
 		return null;
 	}
 
+	// 部分破坏了双亲委派
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
 		if ("com.best.java.aloader.AEntity".equals(name)) {

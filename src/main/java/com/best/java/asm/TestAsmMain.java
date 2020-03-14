@@ -46,6 +46,8 @@ public class TestAsmMain {
 			// 方法二，利用asm重写类名作为子类，使用父类引用后使用
 			ByteClassLoader byteClassLoader = new ByteClassLoader(bytes);
 			Class clazz = byteClassLoader.findClass("com.best.java.asm.AsmPersonService_Tmp");
+			// 可以强转,因为没有破坏双亲委派,父类是app加载
+			// 如果破环了双亲委派,父类也是自定义加载,强转会触发app去加载(不初始化),最终无法强转
 			AsmPersonService asmPersonService = (AsmPersonService) clazz.newInstance();
 			asmPersonService.show("mm");
 			System.out.println(asmPersonService.getClass().getClassLoader());
