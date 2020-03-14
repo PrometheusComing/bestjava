@@ -31,6 +31,7 @@ public class StaticSingleton {
 			Field field = Unsafe.class.getDeclaredField("theUnsafe");
 			field.setAccessible(true);
 			Unsafe unsafe = (Unsafe) field.get(null);
+//			Unsafe unsafe = Unsafe.getUnsafe();
 			StaticSingleton s2 = (StaticSingleton)unsafe.allocateInstance(StaticSingleton.class);
 			System.out.println(s1 == s2);
 		} catch (Exception e) {
