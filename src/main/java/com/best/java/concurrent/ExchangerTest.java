@@ -43,7 +43,10 @@ public class ExchangerTest {
 
 		@Override
 		public void run() {
-				while (!Thread.currentThread().isInterrupted()) {
+				// 判断当前中断标志位
+			    while (!Thread.currentThread().isInterrupted()) {
+			    // 判断当前中断标志位,并自动恢复(true变false),静态方法
+//				while (!Thread.interrupted()) {
 					String data = "a";
 					System.out.println(Thread.currentThread().getName() + " 交换前:" + data);
 					try {
@@ -51,8 +54,8 @@ public class ExchangerTest {
 						Thread.sleep(1000);
 						System.out.println(Thread.currentThread().getName() + " 交换后:" + data);
 					} catch (InterruptedException e) {
-						System.out.println(Thread.currentThread().getName() + " 交换后:" + data);
-						// 捕获后会将中断标志位复原，所以需要再次自己中断，结束
+						System.out.println(Thread.currentThread().getName() + " 中断交换后:" + data);
+						// 捕获后会将中断标志位复原为false，所以需要再次自己中断，结束
 						Thread.currentThread().interrupt();
 					}
 				}
