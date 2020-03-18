@@ -1,7 +1,7 @@
-package com.best.java.adapter.objadapter;
+package com.best.java.pattern.adapter.objadapter;
 
-import com.best.java.adapter.classadapter.Player;
-import com.best.java.adapter.classadapter.Sound;
+import com.best.java.pattern.adapter.classadapter.Player;
+import com.best.java.pattern.adapter.classadapter.Sound;
 
 /**
  * @Author: xjxu3

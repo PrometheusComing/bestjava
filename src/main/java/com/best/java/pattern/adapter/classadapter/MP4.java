@@ -1,4 +1,4 @@
-package com.best.java.adapter.classadapter;
+package com.best.java.pattern.adapter.classadapter;
 
 /**
  * @Author: xjxu3
