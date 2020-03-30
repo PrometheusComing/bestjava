@@ -3,7 +3,7 @@ package com.best.java.aloader;
 /**
  * @Author: xjxu3
  * @Date: 2019/12/20 17:14
- * @Description: 子类自定义加载器加载，父类默认使用子类的加载器
+ * @Description: 子类自定义加载器加载，父类默认使用子类的加载器（loadClass方法，如果是双亲委派，可能父子类加载器不一致）
  */
 public class ATest {
 	public static void main(String[] args) {
