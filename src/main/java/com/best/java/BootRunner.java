@@ -4,6 +4,7 @@ import com.best.java.asm.AsmPersonService;
 import com.best.java.controller.TestController;
 import com.best.java.service.RequestService;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -27,25 +28,28 @@ public class BootRunner implements ApplicationRunner, ApplicationContextAware {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-//		//将applicationContext转换为ConfigurableApplicationContext
-//		ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext)app;
-//
-//		// 获取bean工厂并转换为DefaultListableBeanFactory
+		//将applicationContext转换为ConfigurableApplicationContext
+		ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext)app;
+		ConfigurableListableBeanFactory configurableListableBeanFactory = (ConfigurableListableBeanFactory) app;
+
+
+		// 获取bean工厂并转换为DefaultListableBeanFactory
+		DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableListableBeanFactory;
 //		DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
-//
-//		// 通过BeanDefinitionBuilder创建bean定义
-//		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TestController.class);
-//
-//		// 设置属性userService,此属性引用已经定义的bean:userService,这里userService已经被spring容器管理了.
-////        beanDefinitionBuilder.addPropertyReference("testService", "testService");
-//
-//		// 注册bean
-//		defaultListableBeanFactory.registerBeanDefinition("testController", beanDefinitionBuilder.getRawBeanDefinition());
-//
-//
-//		TestController userController = (TestController) app.getBean("testController");
-//
-//		System.out.println("get you " + userController);
+
+		// 通过BeanDefinitionBuilder创建bean定义
+		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TestController.class);
+
+		// 设置属性userService,此属性引用已经定义的bean:userService,这里userService已经被spring容器管理了.
+//        beanDefinitionBuilder.addPropertyReference("testService", "testService");
+
+		// 注册bean
+		defaultListableBeanFactory.registerBeanDefinition("testController", beanDefinitionBuilder.getRawBeanDefinition());
+
+
+		TestController userController = (TestController) app.getBean("testController");
+
+		System.out.println("get you " + userController);
 
 	}
 

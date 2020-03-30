@@ -29,8 +29,7 @@ public class JDKProxy {
 							return returnValue;
 
 						} else {
-							Object returnValue = method.invoke(target, args);
-							return returnValue;
+							return method.invoke(target, args);
 						}
 
 					}

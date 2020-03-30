@@ -7,6 +7,7 @@ import java.util.Scanner;
 /**
  *  优秀博文推荐地址：
  *  https://www.cnblogs.com/crazymakercircle/p/10225159.html
+ *  https://www.cnblogs.com/ym65536/p/7750312.html
  *
  * 四大IO模型：BIO模型，NIO模型（没有使用select/poll或者epoll系统调用，linux下，可以通过设置socket使其变为non-blocking,其中数据等待
  * 阶段可以直接返回结果，未准备好就要一直轮询是否准备好所以

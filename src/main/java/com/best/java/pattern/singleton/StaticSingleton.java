@@ -30,6 +30,10 @@ public class StaticSingleton {
 		try {
 			Field field = Unsafe.class.getDeclaredField("theUnsafe");
 			field.setAccessible(true);
+			////field.get,字段不是静态字段的话,要传入反射类的对象.如果传null是会报
+			//				//java.lang.NullPointerException
+			//				//
+			//				//但是如果字段是静态字段的话,传入任何对象都是可以的,包括null，其实就是用来获取static对象的
 			Unsafe unsafe = (Unsafe) field.get(null);
 //			Unsafe unsafe = Unsafe.getUnsafe();
 			StaticSingleton s2 = (StaticSingleton)unsafe.allocateInstance(StaticSingleton.class);
