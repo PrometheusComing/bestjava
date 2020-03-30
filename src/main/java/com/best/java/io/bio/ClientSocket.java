@@ -8,8 +8,13 @@ import java.util.Scanner;
  *  优秀博文推荐地址：
  *  https://www.cnblogs.com/crazymakercircle/p/10225159.html
  *
- * 四大IO模型：BIO模型，NIO模型（没有使用select或者epoll系统调用，read和write在无数据时不阻塞，有数据时，阻塞等待内核缓冲区
- * 数据复制到用户缓冲区），IO多路复用，AIO。JDK NIO是结合了NIO + IO多路复用（使用select或epoll系统调用）
+ * 四大IO模型：BIO模型，NIO模型（没有使用select/poll或者epoll系统调用，linux下，可以通过设置socket使其变为non-blocking,其中数据等待
+ * 阶段可以直接返回结果，未准备好就要一直轮询是否准备好所以
+ * read和write在无数据时不阻塞，有数据时，阻塞等待内核缓冲区数据复制到用户缓冲区），IO多路复用，AIO。
+ *
+ *
+ * JDK NIO是结合了NIO + IO多路复用（使用select或epoll系统调用来查询所有可以读的连接。
+ * 当用户进程调用了select，那么整个进程会被block，直到有数据，所以读过一次后要继续轮询select方法，继续读数据）
  *
  *  JDK BIO（同步阻塞IO）：使用一个独立的Acceptor线程来监听客户端的连接（一个连接就是一个线程）
  *  弊端：每个客户端请求都需要一个线程去处理，无法满足高性能、高并发场景
