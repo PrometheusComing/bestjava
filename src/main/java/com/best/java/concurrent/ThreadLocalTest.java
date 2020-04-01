@@ -37,6 +37,22 @@ import java.text.SimpleDateFormat;
  * 不使用软引用是因为等到内存吃紧回收的时候，强引用还在，无法回收，一样oom
  *
  * InheritableThreadLocal 父线程使用后，子线程可以直接继承使用和父线程同一个对象
+ *
+ * ps:
+ * key使用强引用：在当前ThreadLocal没有外部强引用时，ThreadLocalMap的Entry还保持着ThreadLocal的强引用，
+ * ThreadLocal不会被GC。如果没有手动删除，并且当前线程在线程池中不结束，就导致了Entry的内存泄漏。（有点类似用static修饰ThreadLocal的情况）
+ *
+ * key使用弱引用：在当前ThreadLocal没有外部强引用时，ThreadLocalMap只保持着ThreadLocal的弱引用，
+ * 无论有没有手动删除，ThreadLocal都会被GC,如果后续该线程能继续执行get,set,remove方法，就有机会执行cleanSomeSlots()，expungeStaleEntry()
+ * 从而删除那些key为null，value还在的entry。比如ThreadLocalA 和ThreadLocalB，A失去了强引用，但是当前线程里还有value的引用，
+ * 这时候当前线程首次执行ThreadLocalB.get()，会执行map.getEntry(this);显然ThreadLocalB不在map中，进而执行getEntryAfterMiss删除
+ * A里那个key变成null的entry。有点类似与惰性删除
+
+ *
+ * 所以弱引用只是多了一层保障
+ *
+ * 所以一定要手动删除
+ *
  */
 public class ThreadLocalTest implements Runnable {
 
@@ -95,13 +111,13 @@ public class ThreadLocalTest implements Runnable {
 			e.printStackTrace();
 		}
 //		finally {
-//			FORMAT_LOCAL.remove();
+			FORMAT_LOCAL.remove();
 //		}
 	}
 
 	@Override
 	public void run() {
-		print2();
+		print1();
 	}
 
 	public static void main(String[] args) {
