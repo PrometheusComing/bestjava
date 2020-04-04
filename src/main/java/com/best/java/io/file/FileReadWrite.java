@@ -14,6 +14,10 @@ import java.nio.charset.StandardCharsets;
  * @Author: xjxu3
  * @Date: 2020/4/4 10:56
  * @Description:
+ *
+ * 可以使用transferTo()和transferFrom()。底层是sendfile零拷贝技术
+ * transferTo()：通过 FileChannel 把文件里面的源数据写入一个 WritableByteChannel 的目的通道。
+ * transferFrom()：把一个源通道 ReadableByteChannel 中的数据读取到当前 FileChannel 的文件里面。
  */
 public class FileReadWrite {
 	public static void main(String[] args) {
