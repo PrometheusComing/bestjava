@@ -26,9 +26,59 @@
         </encoder>
     </appender>
 
+<!--    <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">-->
+<!--        <url>http://localhost:9200/_bulk</url>-->
+<!--        <index>logs-%date{yyyy-MM-dd}</index>-->
+<!--        <type>tester</type>-->
+<!--        <loggerName>es-logger</loggerName> &lt;!&ndash; optional &ndash;&gt;-->
+<!--        <errorLoggerName>es-error-logger</errorLoggerName> &lt;!&ndash; optional &ndash;&gt;-->
+<!--        <connectTimeout>30000</connectTimeout> &lt;!&ndash; optional (in ms, default 30000) &ndash;&gt;-->
+<!--        <errorsToStderr>false</errorsToStderr> &lt;!&ndash; optional (default false) &ndash;&gt;-->
+<!--        <includeCallerData>false</includeCallerData> &lt;!&ndash; optional (default false) &ndash;&gt;-->
+<!--        <logsToStderr>false</logsToStderr> &lt;!&ndash; optional (default false) &ndash;&gt;-->
+<!--        <maxQueueSize>104857600</maxQueueSize> &lt;!&ndash; optional (default 104857600) &ndash;&gt;-->
+<!--        <maxRetries>3</maxRetries> &lt;!&ndash; optional (default 3) &ndash;&gt;-->
+<!--        <readTimeout>30000</readTimeout> &lt;!&ndash; optional (in ms, default 30000) &ndash;&gt;-->
+<!--        <sleepTime>250</sleepTime> &lt;!&ndash; optional (in ms, default 250) &ndash;&gt;-->
+<!--        <rawJsonMessage>false</rawJsonMessage> &lt;!&ndash; optional (default false) &ndash;&gt;-->
+<!--        <includeMdc>false</includeMdc> &lt;!&ndash; optional (default false) &ndash;&gt;-->
+<!--        <maxMessageSize>100</maxMessageSize> &lt;!&ndash; optional (default -1 &ndash;&gt;-->
+<!--&lt;!&ndash;        <authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <properties>&ndash;&gt;-->
+<!--&lt;!&ndash;            <property>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>host</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>${HOSTNAME}</value>&ndash;&gt;-->
+<!--&lt;!&ndash;                <allowEmpty>false</allowEmpty>&ndash;&gt;-->
+<!--&lt;!&ndash;            </property>&ndash;&gt;-->
+<!--&lt;!&ndash;            <property>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>severity</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>%level</value>&ndash;&gt;-->
+<!--&lt;!&ndash;            </property>&ndash;&gt;-->
+<!--&lt;!&ndash;            <property>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>thread</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>%thread</value>&ndash;&gt;-->
+<!--&lt;!&ndash;            </property>&ndash;&gt;-->
+<!--&lt;!&ndash;            <property>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>stacktrace</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>%ex</value>&ndash;&gt;-->
+<!--&lt;!&ndash;            </property>&ndash;&gt;-->
+<!--&lt;!&ndash;            <property>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>logger</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>%logger</value>&ndash;&gt;-->
+<!--&lt;!&ndash;            </property>&ndash;&gt;-->
+<!--&lt;!&ndash;        </properties>&ndash;&gt;-->
+<!--&lt;!&ndash;        <headers>&ndash;&gt;-->
+<!--&lt;!&ndash;            <header>&ndash;&gt;-->
+<!--&lt;!&ndash;                <name>Content-Type</name>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>application/json</value>&ndash;&gt;-->
+<!--&lt;!&ndash;            </header>&ndash;&gt;-->
+<!--&lt;!&ndash;        </headers>&ndash;&gt;-->
+<!--    </appender>-->
+
     <root level="info">
         <appender-ref ref="console" />
         <appender-ref ref="file" />
+<!--        <appender-ref ref="ELASTIC" />-->
     </root>
 
 <!--    对于sql打印的debug，可以单独再配置一个级别-->
@@ -39,7 +89,11 @@
     </logger>
 
     <!--logback.LogbackDemo：类的全路径 -->
-    <logger name="com.best.java.dao" level="debug" additivity="false">
+    <logger name="com.best.java.mybatis.mappers" level="debug" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </logger>
+    <logger name="org.mybatis.spring" level="debug" additivity="false">
         <appender-ref ref="console"/>
         <appender-ref ref="file" />
     </logger>
@@ -47,4 +101,13 @@
         <appender-ref ref="console"/>
         <appender-ref ref="file" />
     </logger>
+
+<!--    <logger name="es-logger" level="INFO" additivity="false">-->
+<!--        <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--            &lt;!&ndash; ... &ndash;&gt;-->
+<!--            <encoder>-->
+<!--                <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger [%X{localIP}] [%X{requestId}] %msg%n</pattern> &lt;!&ndash; This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre &ndash;&gt;-->
+<!--            </encoder>-->
+<!--        </appender>-->
+<!--    </logger>-->
 </configuration>

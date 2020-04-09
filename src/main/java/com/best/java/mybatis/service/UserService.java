@@ -35,8 +35,12 @@ public class UserService {
 	@Autowired
 	private UserService2 userService2;
 
+	@Transactional
 	public User getUserById(int id){
-		return userMapper.getUserByid(id);
+		// 观察sqlSession
+		User user = userMapper.getUserByid(id);
+		User user2 = userMapper.getUserByid(id);
+		return user;
 	}
 
 	public int addUser(User user){

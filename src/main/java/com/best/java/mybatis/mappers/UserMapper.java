@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.*;
  */
 public interface UserMapper {
 
-	@Select("select id,name,age,del_flag from user where id = #{id}")
-	@Results(id = "learnMap", value = {
-			@Result(column = "id", property = "id", javaType = int.class),
-			@Result(property = "name", column = "name", javaType = String.class),
-			@Result(property = "age", column = "age", javaType = int.class),
-			@Result(property = "delFlag", column = "del_flag", javaType = int.class)
-	})
+	@Select("select id,name,age,del_flag delFlag from user where id = #{id}")
+//	@Results(id = "learnMap", value = {
+//			@Result(column = "id", property = "id", javaType = int.class),
+//			@Result(property = "name", column = "name", javaType = String.class),
+//			@Result(property = "age", column = "age", javaType = int.class),
+//			@Result(property = "delFlag", column = "del_flag", javaType = int.class)
+//	})
 	User getUserByid(@Param(value = "id") int id);
 
 	@Insert("insert into user(id,name,age,del_flag) values(#{id},#{name},#{age},#{delFlag})")
