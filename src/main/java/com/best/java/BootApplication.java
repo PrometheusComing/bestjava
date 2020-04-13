@@ -1,19 +1,17 @@
 package com.best.java;
 
-import com.best.java.aop.LogInterceptor;
+//import com.best.java.aop.LogInterceptor;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -29,6 +27,8 @@ import java.util.List;
 //@EnableAspectJAutoProxy
 @SpringBootApplication
 @MapperScan("com.best.java.mybatis.mappers")
+@EnableEurekaClient
+@EnableFeignClients
 public class BootApplication  implements WebMvcConfigurer, ApplicationContextAware {
 
 	private static String agentPath = "C:\\Users\\prometheus\\Desktop\\work\\agentjava\\target\\agent-java-1.0-SNAPSHOT.jar";
@@ -61,8 +61,8 @@ public class BootApplication  implements WebMvcConfigurer, ApplicationContextAwa
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**")
-				.excludePathPatterns("/toIndex","/index");;
+//		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**")
+//				.excludePathPatterns("/toIndex","/index");
 	}
 
 	@Override
