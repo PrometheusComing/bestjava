@@ -40,6 +40,7 @@ public class ThreadCommunicate {
 					conditionA.await();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					break;
 				} finally {
 					lockCA.unlock();
 				}
@@ -74,6 +75,7 @@ public class ThreadCommunicate {
 					conditionB.await();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					break;
 				} finally {
 					lockAB.unlock();
 				}
@@ -108,6 +110,7 @@ public class ThreadCommunicate {
 					conditionC.await();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					break;
 				} finally {
 					lockBC.unlock();
 				}
