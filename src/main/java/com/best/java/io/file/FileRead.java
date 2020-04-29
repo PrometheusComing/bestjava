@@ -32,18 +32,20 @@ public class FileRead {
 		try {
 			fis = new FileInputStream(new File("C:\\Users\\prometheus\\Desktop\\1.txt"));
 			FileChannel fc = fis.getChannel();
-			ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+			ByteBuffer byteBuffer = ByteBuffer.allocate(12);
 
 			int readBytesSize = fc.read(byteBuffer);
 			byte[] bytes;
 			byte[] result = new byte[0];
 			BytesWrapper bytesWrapper = new BytesWrapper();
 			while (readBytesSize > -1) {
+				System.out.println("readBytesSize = " + readBytesSize);
 				bytes = new byte[readBytesSize];
 				byteBuffer.flip();
 				byteBuffer.get(bytes);
 				result = BytesUtil.append(result, bytes);
 				bytesWrapper.append(bytes);
+				byteBuffer.clear();
 				readBytesSize = fc.read(byteBuffer);
 			}
 			byteBuffer.clear();//用完后把缓冲区还原，便于后续代码使用

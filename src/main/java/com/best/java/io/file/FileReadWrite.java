@@ -32,7 +32,7 @@ public class FileReadWrite {
 			FileChannel ff = fis.getChannel();
 			FileChannel ft = fos.getChannel();
 
-			ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+			ByteBuffer byteBuffer = ByteBuffer.allocate(12);
 
 			// 先读取
 			int readBytesSize = ff.read(byteBuffer);
@@ -43,14 +43,32 @@ public class FileReadWrite {
 				byteBuffer.flip();
 				byteBuffer.get(bytes);
 				bytesWrapper.append(bytes);
+				byteBuffer.clear();
 				readBytesSize = ff.read(byteBuffer);
 			}
 			byteBuffer.clear();//用完后把缓冲区还原，便于后续写操作继续使用它
 			// 开始写
-			byteBuffer.put(bytesWrapper.builder());
-			byteBuffer.flip();
-			while (byteBuffer.hasRemaining()) {
-				ft.write(byteBuffer);
+			int length = byteBuffer.capacity();
+			// 要写出的内容
+			byte[] results = bytesWrapper.builder();
+			// 偏移量
+			int offset = 0;
+			// 剩余要写出的内容的长度
+			int remainLength = results.length;
+			while (remainLength > 0) {
+				// 剩余的长度比byteBuffer大，则写出byteBuffer的长度，否则写出剩余长度
+				System.out.println("remainLength = " + remainLength);
+				// 从results数组的offset开始，截取Math.min(remainLength, length)的长度，放入byteBuffer
+				byteBuffer.put(results,offset, Math.min(remainLength, length));
+				byteBuffer.flip();
+				// 判断posion 和limit之间有没有元素
+				while (byteBuffer.hasRemaining()) {
+					ft.write(byteBuffer);
+				}
+				byteBuffer.clear();
+				// 偏移量步进
+				offset = offset + length;
+				remainLength = remainLength - length;
 			}
 			System.out.println(new String(bytesWrapper.builder(), StandardCharsets.UTF_8));
 		} catch (IOException e) {
