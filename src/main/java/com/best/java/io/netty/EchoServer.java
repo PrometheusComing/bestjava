@@ -1,11 +1,11 @@
 package com.best.java.io.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
-import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
 
@@ -17,7 +17,7 @@ import io.netty.util.concurrent.EventExecutorGroup;
  * 5.都设置完毕了，最后调用ServerBootstrap.bind() 方法来绑定服务器
  *
  *
- * 使用netty提供的非IO线程处理业务耗时逻辑
+ * 使用netty提供的非IO线程池处理业务耗时逻辑
  */
 public class EchoServer {
 
@@ -45,6 +45,8 @@ public class EchoServer {
 					// serverSocketChannel的配置;服务端地址可以复用，如某个进程占用了80端口,然后重启进程,原来的socket1处于TIME-WAIT状态,进程启动后,
 					// 使用一个新的socket2,要占用80端口,如果这个时候不设置SO_REUSEADDR=true,那么启动的过程中会报端口已被占用的异常
 					.option(ChannelOption.SO_REUSEADDR,true)
+					// 使用内存池
+					.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
 					// socketChannel的配置
 					//SO_KEEPALIVE=true,是利用TCP的SO_KEEPALIVE属性,当SO_KEEPALIVE=true的时候,服务端可以探测客户端的连接
 					// 是否还存活着,如果客户端因为断电或者网络问题或者客户端挂掉了等,那么服务端的连接可以关闭掉,释放资源
