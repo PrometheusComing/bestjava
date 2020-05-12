@@ -1,9 +1,13 @@
 package com.best.java.pattern.observer;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
-
-public class WeatherData implements Subject {
+@Setter
+@Getter
+public class WeatherSubject implements Subject {
 
 	private List<Observer> list;
 
@@ -13,7 +17,7 @@ public class WeatherData implements Subject {
 
 	private float pressure;
 
-	WeatherData () {
+	WeatherSubject() {
 		list = new ArrayList<>();
 	}
 
@@ -32,7 +36,7 @@ public class WeatherData implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		list.forEach(t->t.update(temp,humi,pressure));
+		list.forEach(t->t.update(this));
 	}
 
 	public void changeHappen() {
