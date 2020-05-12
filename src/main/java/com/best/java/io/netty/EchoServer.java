@@ -70,6 +70,7 @@ public class EchoServer {
 						protected void initChannel(Channel channel) throws Exception {
 							// 将对象转为String，后续的EchoServerHandler就可以直接强转string而非ByteBuf
 							channel.pipeline().addLast(new StringDecoder());
+							channel.pipeline().addLast(new AuthHandler());
 							channel.pipeline().addLast(businessGroup,new TimeConsumeHandler());
 							channel.pipeline().addLast(businessGroup2,new TimeConsumeHandler());
 //							channel.pipeline().addLast(new TimeConsumeHandler());

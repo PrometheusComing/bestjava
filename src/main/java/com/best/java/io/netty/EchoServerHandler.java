@@ -47,6 +47,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
+//	异常如果不处理的话，传播的顺序和用户添加的顺序一致，即都是正向的，即不论异常抛出是发生在inbound事件还是outbound事件的handler中，
+//	其调用的顺序与它们被用户添加的顺序一致。比如出站handler里的异常捕获事件，仍然是正向传播的。可以看父类的exceptionCaught方法
+//  里面调用了ctx.fireExceptionCaught(cause);来传递。这里获取异常直接就关闭了ctx
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();
 		ctx.close();

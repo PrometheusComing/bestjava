@@ -27,10 +27,10 @@ public class EchoClientHandler extends SimpleChannelInboundHandler {
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, Object o) throws Exception {
 		LOG.info("{}:client channelRead0...",Thread.currentThread().getName());
 		LOG.info("{}:client get msg :{}",Thread.currentThread().getName(),((ByteBuf)o).toString(StandardCharsets.UTF_8));
-
+		ctx.writeAndFlush(Unpooled.buffer().writeBytes("u are very nice".getBytes(StandardCharsets.UTF_8)));
 	}
 
 	@Override
