@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
  * @Date: 2020/5/5 21:56
  * @Description:
  */
-public class EchoServerHandlerMy  extends ChannelInboundHandlerAdapter {
+public class EchoServerHandlerMy extends ChannelInboundHandlerAdapter {
 	private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
 
@@ -24,36 +24,29 @@ public class EchoServerHandlerMy  extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		System.out.println("server channelRead...");
-		System.out.println("Server reveived: " + ((ByteBuf) msg).toString(StandardCharsets.UTF_8));
-//		Channel channel = ctx.channel();
-//		ChannelFuture cf = channel.writeAndFlush(Unpooled.buffer().writeBytes("我收到了".getBytes(StandardCharsets.UTF_8)));
-
-		//创建将数据写到Channel的Runnable
-		Runnable writer = new Runnable() {
-			@Override
-			public void run() {
-				ChannelFuture cf = ctx.writeAndFlush(Unpooled.buffer().writeBytes("我收到了".getBytes(StandardCharsets.UTF_8)));
-				cf.addListener(new ChannelFutureListener() {
-					@Override
-					public void operationComplete(ChannelFuture future) throws Exception {
-						//写操作完成，并没有错误发生
-						if (future.isSuccess()){
-							System.out.println("successful");
-						}else{
-							//记录错误
-							System.out.println("error");
-							future.cause().printStackTrace();
-						}
-					}
-				});
+		System.out.println("Server reveived: " + msg);
+		EXECUTOR.execute(() -> {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		};
-		EXECUTOR.execute(writer);
-
-	}
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
+			System.out.println(Thread.currentThread().getName() + "执行了");
+			ChannelFuture cf = ctx.writeAndFlush(Unpooled.buffer().writeBytes("我收到了".getBytes(StandardCharsets.UTF_8)));
+			cf.addListener(new ChannelFutureListener() {
+				@Override
+				public void operationComplete(ChannelFuture future) throws Exception {
+					//写操作完成，并没有错误发生
+					if (future.isSuccess()) {
+						System.out.println("successful");
+					} else {
+						//记录错误
+						System.out.println("error");
+						future.cause().printStackTrace();
+					}
+				}
+			});
+		});
 	}
 
 	@Override

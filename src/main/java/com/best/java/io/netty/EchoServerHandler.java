@@ -35,8 +35,15 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 		});
 	}
 	@Override
+	/*
+	  channelReadComplete方法的回调时机不受影响，即它的回调时机和是否使用了解码器没有一毛钱关系，
+	  它只认可JDK的Socketchannel是否读完了，两个判断条件：
+	  下次读到0个字节
+	  本次读到的字节数小于当前缓冲区的容量
+	  满足一个，就会触发一次调用，和业务上的一个完整数据包的设置没有任何关系
+	  所以要慎用
+	 */
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-//		ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
 	}
 
 	@Override
