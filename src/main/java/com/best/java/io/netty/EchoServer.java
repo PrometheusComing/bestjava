@@ -8,20 +8,27 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * 1.创建ServerBootstrap实例来引导绑定和启动服务器
- * 2.创建NioEventLoopGroup对象来处理事件，如接受新连接、接收数据、写数据等等
- * 3.指定InetSocketAddress，服务器监听此端口
- * 4.设置childHandler执行所有的连接请求
- * 5.都设置完毕了，最后调用ServerBootstrap.bind() 方法来绑定服务器
- *
- *
- * 使用netty提供的非IO线程池处理业务耗时逻辑
+ * Netty服务端Channel绑定的NioEventLoop线程是一个boss线程，一个boss线程负责一个服务器端口，
+ * 它会轮询ServerSocketChannel的OP_ACCEPT事件，检测到后会调用ServerSocketChannel的accept()方法非阻塞的
+ * 获取一个SocketChannel，即建立一条TCP逻辑连接，并将其封装成Netty的NioSocketChannel对象，封装时会
+ * 为NioSocketChannel创建Unsafe组件用来实现该客户端Channel上的网络I/O功能，还会为其创建一个新的pipeline，
+ * 之后会循环调用原服务端Channel绑定的pipeline的fireChannelRead()方法，将每条新连接沿着服务端的pipeline传递下去,
+ * 因为channelRead()事件是入站事件，所以传播顺序是从头部节点开始，直到尾部节点结束，中间先会到达服务端channel的handler
+ * （也可能用户没有配置），后到达新连接接入器handler（Netty服务端初始化时默认创建）——ServerBootstrapAcceptor，
+ * 服务端Channel会通过这个接入器的channelRead()方法为传播进来的客户端Channel分配worker线程池的
+ * NioEventLoop（本质是为其绑定I/O线程），将客户端Channel绑定到对应的I/O多路复用器上面，接着在通过传播channelActive事件
+ * ，为该客户端Channel注册OP_READ事件，因为Netty默认为所有channel配置的都是自动注册OP_READ策略，即读优先
  */
 public class EchoServer {
 
-	private int port;
+	private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class);
+
+
+	private final int port;
 
 	public EchoServer(int port) {
 		this.port = port;
@@ -32,6 +39,7 @@ public class EchoServer {
 		EventLoopGroup workGroup = null;
 		// 使用netty自带的线程池处理耗时业务
 		EventExecutorGroup businessGroup = new DefaultEventExecutorGroup(10);
+		EventExecutorGroup businessGroup2 = new DefaultEventExecutorGroup(10);
 		try {
 			//因为使用NIO，指定NioEventLoopGroup来接受和处理新连接
 			bossGroup = new NioEventLoopGroup();
@@ -62,7 +70,10 @@ public class EchoServer {
 						protected void initChannel(Channel channel) throws Exception {
 							// 将对象转为String，后续的EchoServerHandler就可以直接强转string而非ByteBuf
 							channel.pipeline().addLast(new StringDecoder());
-							channel.pipeline().addLast(businessGroup,new EchoServerHandler());
+							channel.pipeline().addLast(businessGroup,new TimeConsumeHandler());
+							channel.pipeline().addLast(businessGroup2,new TimeConsumeHandler());
+//							channel.pipeline().addLast(new TimeConsumeHandler());
+							channel.pipeline().addLast(new EchoServerHandler());
 						}
 					});
 			ChannelFuture future = boot.bind().sync();
