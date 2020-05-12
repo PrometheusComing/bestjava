@@ -14,13 +14,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * @Date: 2020/4/28 17:15
  * @Description:
  */
-public class EchoClient {
+public class EchoClient2 {
 
 	private final int port;
 
 	private final String host;
 
-	public EchoClient(String host, int port) {
+	public EchoClient2(String host, int port) {
 		this.port = port;
 		this.host = host;
 	}
@@ -55,7 +55,7 @@ public class EchoClient {
 	}
 
 	public static void main(String[] args) {
-		EchoClient echoClient = new EchoClient("192.168.0.105", 20000);
+		EchoClient2 echoClient = new EchoClient2("192.168.0.105", 20000);
 		try {
 			echoClient.start();
 		} catch (Exception e) {
