@@ -19,20 +19,20 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		LOG.info("{}:server channelRead...",Thread.currentThread().getName());
 		LOG.info("{}:server reveived:{}",Thread.currentThread().getName(),msg);
-//		ChannelFuture cf = ctx.writeAndFlush(Unpooled.buffer().writeBytes("我收到了".getBytes(StandardCharsets.UTF_8)));
-//		cf.addListener(new ChannelFutureListener() {
-//			@Override
-//			public void operationComplete(ChannelFuture future) throws Exception {
-//				//写操作完成，并没有错误发生
-//				if (future.isSuccess()){
-//					LOG.info("{}:server process sucess",Thread.currentThread().getName());
-//				}else{
-//					//记录错误
-//					LOG.info("{}:server process fail",Thread.currentThread().getName());
-//					future.cause().printStackTrace();
-//				}
-//			}
-//		});
+		ChannelFuture cf = ctx.writeAndFlush(Unpooled.buffer().writeBytes("我收到了".getBytes(StandardCharsets.UTF_8)));
+		cf.addListener(new ChannelFutureListener() {
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				//写操作完成，并没有错误发生
+				if (future.isSuccess()){
+					LOG.info("{}:server process sucess",Thread.currentThread().getName());
+				}else{
+					//记录错误
+					LOG.info("{}:server process fail",Thread.currentThread().getName());
+					future.cause().printStackTrace();
+				}
+			}
+		});
 	}
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
