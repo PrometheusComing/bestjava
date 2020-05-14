@@ -86,13 +86,16 @@ import org.slf4j.LoggerFactory;
  *     }
  *  这个构造方法。到此为止，NioServerSocketChannel初始化完成了，可以debug后看future对象里的channel属性。ServerSocketChannel与此相似。
  *
- *  init(channel){
+ *  ServerBootstrap.init(channel){
  *       // 设置channel的options
  *       setChannelOptions(channel, newOptionsArray(), logger);
  *        // 设置channel的Attributes
  *       setAttributes(channel, attrs0().entrySet().toArray(EMPTY_ATTRIBUTE_ARRAY));
  *       ChannelPipeline p = channel.pipeline();
  *       // 添加一个匿名对象ChannelInitializer，属于入站处理器，这里匿名对象里的方法还没执行，只是把这个对象放进了ChannelPipeline p中
+ *       // 对于Bootstrap.init(channel)，则是直接p.addLast(config.handler());
+ *       // pipeline.addLast(handler);和p.addLast(config.handler());效果一样，都是把用户自定义的ChannelInitializer封装到
+ *       // DefaultChannelHandlerContext后加入管道
  *       p.addLast(new ChannelInitializer<Channel>() {
  *       	   // 重写了initChannel方法
  *             public void initChannel(final Channel ch) {
@@ -102,7 +105,7 @@ import org.slf4j.LoggerFactory;
  *                 	   // 添加用户配置的handler，服务端的NioServerSocketChannel一般不配置
  *                     pipeline.addLast(handler);
  *                 }
- *					// 220行pipeline.fireChannelRegistered()触发initChannel方法后，将Runnable作为task放入到taskQueue中
+ *					// 222行pipeline.fireChannelRegistered()触发initChannel方法后，将Runnable作为task放入到taskQueue中
  *                 ch.eventLoop().execute(new Runnable() {
  *                     public void run() {
  *                     		// 添加一个ServerBootstrapAcceptor作为入站处理器，作用是等服务端监听accept事件后，会执行到
@@ -165,7 +168,7 @@ import org.slf4j.LoggerFactory;
  *    NioEventLoop的父类SingleThreadEventExecutor.execute(Runnable task)——>execute(Runnable task, boolean immediate),即
  *    private void execute(Runnable task, boolean immediate) {
  *         boolean inEventLoop = inEventLoop();
- *         // 把155行的runnable作为任务放入taskQueue中
+ *         // 把158行的runnable作为任务放入taskQueue中
  *         addTask(task);
  *         // 明显当前线程为main，并非NioEventLoop的线程
  *         if (!inEventLoop) {
@@ -202,7 +205,7 @@ import org.slf4j.LoggerFactory;
  *     }
  *     SingleThreadEventExecutor.this.run();——>NioEventLoop.run()这里就是nio线程轮询事件的逻辑
  *     由于服务端的channel事件才建立，还没有注册到selector上，目前肯定是没有事件的，但是当前的taskQueue却有任务，这个
- *     任务就是155行的runnable，所以nio线程将会执行里面的register0(promise);逻辑
+ *     任务就是158行的runnable，所以nio线程将会执行里面的register0(promise);逻辑
  *	   private void register0(ChannelPromise promise) {
  *             try {
  *                 boolean firstRegistration = neverRegistered;
@@ -233,14 +236,14 @@ import org.slf4j.LoggerFactory;
  *    private ChannelFuture doBind(final SocketAddress localAddress) {
  *         final ChannelFuture regFuture = initAndRegister();
  *         final Channel channel = regFuture.channel();
- *         // 这种情况nio线程注册完成了，调用doBind0方法来绑定端口，可以确定209行isActive()是false，不会执行pipeline.fireChannelActive()
+ *         // 这种情况nio线程注册完成了，调用doBind0方法来绑定端口，可以确定224行isActive()是false，不会执行pipeline.fireChannelActive()
  *         if (regFuture.isDone()) {
  *             ChannelPromise promise = channel.newPromise();
- *             // 249行wasActive是false，执行252行后，259行是true，因此执行pipeline.fireChannelActive()
+ *             // 266行wasActive是false，执行269行后，276行是true，因此执行pipeline.fireChannelActive()
  *             doBind0(regFuture, channel, localAddress, promise);
  *             return promise;
  *         } else {
- *         //这种情况是等nio线程注册完成了回调到这里，调用doBind0方法来绑定端口，可以确定209行isActive()是false，
+ *         //这种情况是等nio线程注册完成了回调到这里，调用doBind0方法来绑定端口，可以确定224行isActive()是false，
  *  *     //不会执行pipeline.fireChannelActive()。和上面一样，只不过上面可以直接执行(毕竟已经完成了)，这里还需要使用监听器
  *             final PendingRegistrationPromise promise = new PendingRegistrationPromise(channel);
  *             regFuture.addListener(new ChannelFutureListener() {
