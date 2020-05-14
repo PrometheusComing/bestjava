@@ -28,9 +28,19 @@ public class EchoClient {
 	public void start() throws Exception {
 		EventLoopGroup group = null;
 		try {
+			// 初始化nio线程池，在里面创建EventExecutor[] children,并设置线程选择器EventExecutorChooser(根据children长度，是2的幂
+			// 就用按位选择器，否则使用轮询选择器。用于选出NioEventLoop与channel绑定),不指定executor时，executor为
+			// ThreadPerTaskExecutor(线程执行器，里面封装了线程工厂)，再通过for循环为children数组创建元素(元素就是NioEventLoop实例，
+			// NioEventLoop间接实现了EventExecutor)并将线程执行器绑定到NioEventLoop
+			// 见MultithreadEventExecutorGroup 84行
+			// 此时每个NioEventLoop的selector也已经创建，但是当前NioEventLoop的thread还是null，也没有启动。每个NioEventLoop的parent
+			// 都是同一个NioEventLoopGroup实例。所以NioEventLoop其实就可以看成是一个线程的封装
+			// 可以debug后观察下
 			group = new NioEventLoopGroup();
 			Bootstrap bootstrap = new Bootstrap();
+			// 将group设置到bootstrap
 			bootstrap.group(group)
+					// 初始化了一个用于生产指定channel类型的工厂实例
 					.channel(NioSocketChannel.class)
 					.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
 					.option(ChannelOption.TCP_NODELAY, Boolean.TRUE)
