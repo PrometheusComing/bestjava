@@ -25,6 +25,17 @@ import java.nio.charset.StandardCharsets;
  * 1）它将 limit 设置为与 capacity 相同；
  * <p>
  * 2）它设置 position 为 0。
+ *
+ * 从缓冲数组里取出字节，也就是byteBuffer.get（把数据从缓冲区拿出放到代码中的数组）和channel.write（把数据从缓冲区拿出放到channel）,
+ * 两个方法也都会使position变化
+ * 这两个方法只能获取缓冲数组中position到limit之间的数据，所以自己要明白当前position到limit之间的数据是否是自己需要的数据，如果不是，可以
+ * 调用flip或其他方法调整。比如，capacity为12，position为0，limit为12的初始缓冲数组，调用byteBuffer.put 8个字节后，position变为 7，
+ * 此时如果直接使用channel.write，写入到channel里的就只能是position 7到limit 12之间的字节，所以要先调用flip，将position变为0，limit变为
+ * 7，那么再调用channel.write，写入到channel里的就是position 0到limit 7之间的正确字节了。
+ *
+ * 往缓冲数组里放入字节，也就是也就是byteBuffer.put（把数据从代码中的数组拿出放到缓冲区）和channel.read（把数据从channel拿出放到缓冲区）,
+ * 两个方法也都会使position变化
+ * 这两个方法只能写入缓冲数组中position到limit之间的数据，如果put方法放入超出范围的数据，就会BufferOverflowException
  */
 public class FileRead {
 	public static void main(String[] args) {
