@@ -5,7 +5,7 @@ package com.best.java.pattern.status;
  * @Date: 2020/5/18 20:59
  * @Description:
  */
-class ConcreteStateB extends State{
+class ConcreteStateB extends State {
 
 	@Override
 	public void Handle(Context context) {
