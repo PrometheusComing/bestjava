@@ -20,6 +20,9 @@ public class FeignTestController {
 
 	@PostMapping("/getFeign")
 	public String getFeign(@RequestParam("msg") String msg) {
-		return feignService.getHiFeign(msg);
+		long current = System.currentTimeMillis();
+		String result = feignService.getHiFeign(msg);
+		System.out.println("cost " + (System.currentTimeMillis() - current));
+		return result;
 	}
 }

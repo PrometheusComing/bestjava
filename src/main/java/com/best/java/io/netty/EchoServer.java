@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * 注册read事件。bind()主要是将NioServerSocketChannel的accept事件注册到bossGroup的线程的selector上。后续连接事件到来，会获取
  * NioSocketChannel并选择workGroup的线程上的selector注册read事件。
  *
- * ps:NioEventLoop的run就是轮询操作，其中 processSelectedKeys()——>processSelectedKeysOptimized()
+ * ps:NioEventLoop的run就是轮询操作，其中 processSelectedKeys()——>processSelectedKeysOptimized()SimpleChannelInboundHnadler
  * ——>processSelectedKey(k, (AbstractNioChannel) a);方法里有对各类兴趣事件的处理
  *
  *

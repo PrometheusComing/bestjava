@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
-    <property name="log.path" value="C:/Users/prometheus/Desktop" />
+    <springProperty scope="context" name="indexName" source="spring.application.name"/>
+    <property name="logEntity.path" value="C:/Users/prometheus/Desktop"/>
+    <property name="host" value="127.0.0.1"/>
+    <property name="port" value="9200"/>
+
 
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -16,8 +20,8 @@
     <!--输出到文件-->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/logback.%d{yyyy-MM-dd}.log</fileNamePattern>
-<!--            30天-->
+            <fileNamePattern>${logEntity.path}/logback.%d{yyyy-MM-dd}.logEntity</fileNamePattern>
+            <!--            30天-->
             <maxHistory>30</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
@@ -26,88 +30,52 @@
         </encoder>
     </appender>
 
-<!--    <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">-->
-<!--        <url>http://localhost:9200/_bulk</url>-->
-<!--        <index>logs-%date{yyyy-MM-dd}</index>-->
-<!--        <type>tester</type>-->
-<!--        <loggerName>es-logger</loggerName> &lt;!&ndash; optional &ndash;&gt;-->
-<!--        <errorLoggerName>es-error-logger</errorLoggerName> &lt;!&ndash; optional &ndash;&gt;-->
-<!--        <connectTimeout>30000</connectTimeout> &lt;!&ndash; optional (in ms, default 30000) &ndash;&gt;-->
-<!--        <errorsToStderr>false</errorsToStderr> &lt;!&ndash; optional (default false) &ndash;&gt;-->
-<!--        <includeCallerData>false</includeCallerData> &lt;!&ndash; optional (default false) &ndash;&gt;-->
-<!--        <logsToStderr>false</logsToStderr> &lt;!&ndash; optional (default false) &ndash;&gt;-->
-<!--        <maxQueueSize>104857600</maxQueueSize> &lt;!&ndash; optional (default 104857600) &ndash;&gt;-->
-<!--        <maxRetries>3</maxRetries> &lt;!&ndash; optional (default 3) &ndash;&gt;-->
-<!--        <readTimeout>30000</readTimeout> &lt;!&ndash; optional (in ms, default 30000) &ndash;&gt;-->
-<!--        <sleepTime>250</sleepTime> &lt;!&ndash; optional (in ms, default 250) &ndash;&gt;-->
-<!--        <rawJsonMessage>false</rawJsonMessage> &lt;!&ndash; optional (default false) &ndash;&gt;-->
-<!--        <includeMdc>false</includeMdc> &lt;!&ndash; optional (default false) &ndash;&gt;-->
-<!--        <maxMessageSize>100</maxMessageSize> &lt;!&ndash; optional (default -1 &ndash;&gt;-->
-<!--&lt;!&ndash;        <authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;        <properties>&ndash;&gt;-->
-<!--&lt;!&ndash;            <property>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>host</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>${HOSTNAME}</value>&ndash;&gt;-->
-<!--&lt;!&ndash;                <allowEmpty>false</allowEmpty>&ndash;&gt;-->
-<!--&lt;!&ndash;            </property>&ndash;&gt;-->
-<!--&lt;!&ndash;            <property>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>severity</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>%level</value>&ndash;&gt;-->
-<!--&lt;!&ndash;            </property>&ndash;&gt;-->
-<!--&lt;!&ndash;            <property>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>thread</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>%thread</value>&ndash;&gt;-->
-<!--&lt;!&ndash;            </property>&ndash;&gt;-->
-<!--&lt;!&ndash;            <property>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>stacktrace</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>%ex</value>&ndash;&gt;-->
-<!--&lt;!&ndash;            </property>&ndash;&gt;-->
-<!--&lt;!&ndash;            <property>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>logger</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>%logger</value>&ndash;&gt;-->
-<!--&lt;!&ndash;            </property>&ndash;&gt;-->
-<!--&lt;!&ndash;        </properties>&ndash;&gt;-->
-<!--&lt;!&ndash;        <headers>&ndash;&gt;-->
-<!--&lt;!&ndash;            <header>&ndash;&gt;-->
-<!--&lt;!&ndash;                <name>Content-Type</name>&ndash;&gt;-->
-<!--&lt;!&ndash;                <value>application/json</value>&ndash;&gt;-->
-<!--&lt;!&ndash;            </header>&ndash;&gt;-->
-<!--&lt;!&ndash;        </headers>&ndash;&gt;-->
-<!--    </appender>-->
+    <appender class="com.best.java.log.EsAppender" name="ELASTIC">
 
-    <root level="info">
-        <appender-ref ref="console" />
-        <appender-ref ref="file" />
-<!--        <appender-ref ref="ELASTIC" />-->
+        <host>${host}</host>
+
+        <port>${port}</port>
+
+        <indexName>${indexName}</indexName>
+
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="ELASTIC"/>
     </root>
 
-<!--    对于sql打印的debug，可以单独再配置一个级别-->
+    <!--    对于sql打印的debug，可以单独再配置一个级别-->
     <!-- 该路径下级别为INFO，不设置级别则默认继承root级别 -->
     <logger name="com.best.java" level="info" additivity="false">
-        <appender-ref ref="console" />
-        <appender-ref ref="file" />
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="ELASTIC"/>
     </logger>
 
     <!--logback.LogbackDemo：类的全路径 -->
     <logger name="com.best.java.mybatis.mappers" level="debug" additivity="false">
         <appender-ref ref="console"/>
-        <appender-ref ref="file" />
+        <appender-ref ref="file"/>
     </logger>
     <logger name="org.mybatis.spring" level="debug" additivity="false">
         <appender-ref ref="console"/>
-        <appender-ref ref="file" />
+        <appender-ref ref="file"/>
     </logger>
     <logger name="org" level="error" additivity="false">
         <appender-ref ref="console"/>
-        <appender-ref ref="file" />
+        <appender-ref ref="file"/>
+        <appender-ref ref="ELASTIC"/>
     </logger>
-
-<!--    <logger name="es-logger" level="INFO" additivity="false">-->
-<!--        <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-<!--            &lt;!&ndash; ... &ndash;&gt;-->
-<!--            <encoder>-->
-<!--                <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger [%X{localIP}] [%X{requestId}] %msg%n</pattern> &lt;!&ndash; This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre &ndash;&gt;-->
-<!--            </encoder>-->
-<!--        </appender>-->
-<!--    </logger>-->
+    <logger name="springfox" level="error" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="ELASTIC"/>
+    </logger>
+    <logger name="com.netflix" level="error" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="ELASTIC"/>
+    </logger>
 </configuration>

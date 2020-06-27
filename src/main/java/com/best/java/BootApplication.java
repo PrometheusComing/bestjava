@@ -1,6 +1,7 @@
 package com.best.java;
 
 //import com.best.java.aop.LogInterceptor;
+import com.best.java.aop.LogInterceptor;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -61,8 +62,8 @@ public class BootApplication  implements WebMvcConfigurer, ApplicationContextAwa
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**")
-//				.excludePathPatterns("/toIndex","/index");
+		registry.addInterceptor(applicationContext.getBean(LogInterceptor.class)).addPathPatterns("/**")
+				.excludePathPatterns("/toIndex","/index");
 	}
 
 	@Override

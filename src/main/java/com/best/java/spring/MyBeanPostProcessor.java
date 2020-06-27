@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
  * --> initializingBean接口的afterPropertiesSet() --> Bean定义文件中定义init-method
  * --> BeanPostProcessors的ProcessaAfterInitialization() --> DisposableBean的destroy()
  * --> Bean定义文件中定义destroy-method
+ *
+ * BeanFactoryPostProcessor可以在bean实例化前获取bean的BeanDefinition对象，从而改变bean的定义及属性，如单例还是多例等等
  */
 public class MyBeanPostProcessor implements BeanPostProcessor {
 

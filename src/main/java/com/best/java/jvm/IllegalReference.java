@@ -9,11 +9,14 @@ package com.best.java.jvm;
 public class IllegalReference {
 	static {
 		i = 10;
+		// 非法向前引用异常
+//		System.out.println(i);
 	}
 	static int i;
 
 	public static void main(String[] args) {
-		boolean flag = false;
-		flag = true;
+		// 在这里使用没事
+		i = 100;
+		System.out.println(i);
 	}
 }

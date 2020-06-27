@@ -90,4 +90,9 @@ public class UserController {
 	public int testTransactional(@RequestBody User user){
 		return userService.addUserTest(user);
 	}
+
+	@RequestMapping(value = "/addUserAop",method = RequestMethod.POST)
+	public int testAop(@RequestBody User user){
+		return userService.addUserAop(user);
+	}
 }

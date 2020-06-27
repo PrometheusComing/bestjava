@@ -14,6 +14,15 @@ import org.springframework.stereotype.Component;
  * @Author: xjxu3
  * @Date: 2019/12/9 15:48
  * @Description:
+ * 执行顺序
+ * Around --> Before --> Around --> After --> AfterReturning --> AfterThrowing
+ * 原理：将建言转换成各个MethodInterceptor mi，职责链中按照after,around，before的顺序放入对应的mi
+ * 也就是 after的大致内容是 {1 mi.proceed();2 sout}  sout在这里代表各个拦截器增强的内容,mi.proceed()表示调用下一个拦截器,没拦截器就
+ *       around为        {3 sout;4 mi.proceed();5 sout}                                                直接调用目标方法
+ *       before为        {6 sout;7 mi.proceed();}
+ *       目标方法内容为    {8 sout}  这里sout就是目标方法的原始内容
+ *       执行顺序就是 1->3->4->6->7->8->5->2
+ *       注意：around里的pjp.proceed其实就是mi.proceed()
  */
 @Aspect
 @Component

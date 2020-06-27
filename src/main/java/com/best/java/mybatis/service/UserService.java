@@ -1,6 +1,6 @@
 package com.best.java.mybatis.service;
 
-import com.alibaba.druid.util.StringUtils;
+import com.best.java.mybatis.anno.MyLog;
 import com.best.java.mybatis.mappers.UserMapper;
 import com.best.java.mybatis.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.UUID;
 public class UserService {
 
 	//JDK8 新format，线程安全
-	public static DateTimeFormatter FOR_MAT =  DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+	public static DateTimeFormatter FOR_MAT = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 
 	@Autowired
 	private UserMapper userMapper;
@@ -36,19 +36,19 @@ public class UserService {
 	private UserService2 userService2;
 
 	@Transactional
-	public User getUserById(int id){
+	public User getUserById(int id) {
 		// 观察sqlSession
 		User user = userMapper.getUserByid(id);
 		User user2 = userMapper.getUserByid(id);
 		return user;
 	}
 
-	public int addUser(User user){
+	public int addUser(User user) {
 		return userMapper.addUser(user);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public int addUserTest(User user){
+	public int addUserTest(User user) {
 		int result = userMapper.addUser(user);
 		user.setId(user.getId() + 1000);
 		user.setName(user.getName() + "test2");
@@ -67,7 +67,7 @@ public class UserService {
 
 	public String uploadFile(MultipartFile multipartFile) throws IOException {
 		String way = "C:\\Users\\prometheus\\Desktop";
-		String timeString =FOR_MAT.format(LocalDateTime.now());
+		String timeString = FOR_MAT.format(LocalDateTime.now());
 		StringBuilder newFileName = new StringBuilder(UUID.randomUUID().toString()).append("-").append(timeString);
 		if (multipartFile.getOriginalFilename().lastIndexOf(".") > -1) {
 			// 添加文件后缀
@@ -78,5 +78,17 @@ public class UserService {
 //		Files.write(destination,multipartFile.getBytes());
 		multipartFile.transferTo(destination.toFile());
 		return newFileName.toString();
+	}
+
+	@Transactional
+	@MyLog(operation = "添加用户")
+	public int addUserAop(User user) {
+		int i = userMapper.addUser(user);
+		try {
+			int j = 100/0;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return i;
 	}
 }

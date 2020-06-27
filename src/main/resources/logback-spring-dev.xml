@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
-    <property name="log.path" value="/Users/tengjun/Documents/log" />
+    <property name="logEntity.path" value="/Users/tengjun/Documents/logEntity" />
 
     <!--输出到控制台-->
     <appender name="console-controller" class="ch.qos.logback.core.ConsoleAppender">
@@ -16,7 +16,7 @@
     <!--输出到文件-->
     <appender name="file-controller" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/logback.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${logEntity.path}/logback.%d{yyyy-MM-dd}.logEntity</fileNamePattern>
             <!--            30天-->
             <maxHistory>30</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
