@@ -40,17 +40,33 @@ public class MyAspect {
 	 * 6 第二个*号 : 代表对哪个类进行拦截，*代表所有类
 	 * 7 第三个*号 : 代表方法  *代表任意方法
 	 * 8 (..) : 代表方法的参数有无都可以
+	 *
+	 * @within 表示该注解必须放在类上（放在方法上，该方法并不会被切中），这个类下的所有方法都会被切中。（所以注解的target必须有
+	 * ElementType.TYPE类型）。
+	 *
+	 * @annotation 表示该注解必须放在方法上，才能被切中，放在类上无法切中
+	 *
+	 * @target @within:当前类有注解，子类无注解，且子类调用的是该类的方法（即子类未对该方法进行重载），则有效果。
+	 *          target:父类有注解，子类无注解，则对子类无效，除非注解有@Inherited
+	 *
+	 *          子类有注解，父类无注解，target对父类所有方法生效，within只对重载过的方法有效
+	 *          -------使用的时候还是多测测比较好-------。
+	 *
+	 * @args 表示目标方法的参数的类上，有目标注解修饰
+	 *
+	 * @Inherited 修饰了注解，假设A被注解修饰，B继承了A，B也等于被注解修饰
+	 *
 	 */
 //	@Pointcut(value = "execution(* com.best.java.controller.*.*(..))")
 //	public void methodIntercept() {
 //	}
 
-//	@Pointcut("@annotation(com.best.java.annotation.MyAnno)")
-	@Pointcut("@within(com.best.java.annotation.MyAnno)")
+	@Pointcut("@target(com.best.java.annotation.MyAnno)")
+//	@Pointcut("@within(com.best.java.annotation.MyAnno)")
 	public void methodIntercept() {
 	}
 
-	@Around(value = "methodIntercept() && @within(myAnnos)")
+	@Around(value = "methodIntercept() && @target(myAnnos)")
 	public Object doAround(ProceedingJoinPoint pjp, MyAnno myAnnos) throws Throwable {
 		Object[] objects = pjp.getArgs();
 		for (Object o : objects) {
