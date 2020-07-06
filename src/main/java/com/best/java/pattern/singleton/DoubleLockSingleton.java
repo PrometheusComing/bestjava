@@ -11,9 +11,9 @@ public class DoubleLockSingleton {
 	private DoubleLockSingleton() {
 		System.out.println("DoubleLockSingleton is created");
 	}
-	private volatile DoubleLockSingleton doubleLockSingleton;
+	private static volatile DoubleLockSingleton doubleLockSingleton;
 
-	public DoubleLockSingleton getDoubleLockSingleton() {
+	public static DoubleLockSingleton getDoubleLockSingleton() {
 		if(doubleLockSingleton == null) {
 			synchronized (DoubleLockSingleton.class) {
 				if (doubleLockSingleton == null) {
